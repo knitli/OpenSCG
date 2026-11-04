@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1.0-draft",
+  "schema_version": "0.1.0",
   "profile": "dod-5200.45",
   "synthetic": true,
   "guide_id": "urn:uuid:5e1d0c3a-0000-4000-8000-00000000a001",

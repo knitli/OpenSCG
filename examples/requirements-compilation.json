@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1.0-draft",
+  "schema_version": "0.1.0",
   "profile": "cnsi-core",
   "synthetic": true,
   "guide_id": "urn:uuid:00000000-0000-4000-8000-000000000001",

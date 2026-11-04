@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1.0-draft",
+  "schema_version": "0.1.0",
   "profile": "cnsi-core",
   "synthetic": true,
   "guide_id": "urn:uuid:5e1d0c3a-0000-4000-8000-00000000a001",
@@ -188,20 +188,20 @@
         "purpose": "approve-scg-revision",
         "guide_id": "urn:uuid:5e1d0c3a-0000-4000-8000-00000000a001",
         "revision_id": "2026-r1",
-        "schema_version": "0.1.0-draft",
+        "schema_version": "0.1.0",
         "profile": "cnsi-core",
         "payload_format": "openscg-payload-v1",
         "payload_digest": {
           "alg": "sha-256",
-          "value": "ff34d37ca573d1e8b709adb0e517e93414c15cbb2ba435d0bbfe41365aec5bbf"
+          "value": "0707eed223b4539cfd2605e58fac222ef3ea3d51969930497ac7d43f2af8cc42"
         },
         "signer": {
           "name": "Casey Sample",
           "position": "Director, Example Programs (fictional)"
         },
-        "statement_text": "I approve revision 2026-r1 of the security classification guide \"SYNTHETIC EXAMPLE — Security Classification Guide for the LANTERN Training Sensor (NOT REAL GUIDANCE)\" (urn:uuid:5e1d0c3a-0000-4000-8000-00000000a001), whose OpenSCG payload has SHA-256 digest ff34d37ca573d1e8b709adb0e517e93414c15cbb2ba435d0bbfe41365aec5bbf. This approval covers exactly that content."
+        "statement_text": "I approve revision 2026-r1 of the security classification guide \"SYNTHETIC EXAMPLE — Security Classification Guide for the LANTERN Training Sensor (NOT REAL GUIDANCE)\" (urn:uuid:5e1d0c3a-0000-4000-8000-00000000a001), whose OpenSCG payload has SHA-256 digest 0707eed223b4539cfd2605e58fac222ef3ea3d51969930497ac7d43f2af8cc42. This approval covers exactly that content."
       },
-      "signature": "MIIElAYJKoZIhvcNAQcCoIIEhTCCBIECAQExCzAJBgUrDgMCGgUAMAsGCSqGSIb3DQEHAaCCAoMwggJ/MIICJKADAgECAgEIMAoGCCqGSM49BAMCMFAxTjAhBgNVBAoMGlNZTlRIRVRJQyBPcGVuU0NHIFRlc3QgUEtJMCkGA1UEAwwiU1lOVEhFVElDIFRlc3QgUm9vdCBDQSAoVEVTVCBPTkxZKTAeFw0yNjAxMDEwMDAwMDBaFw0zNjAxMDEwMDAwMDBaMFQxUjAhBgNVBAoMGlNZTlRIRVRJQyBPcGVuU0NHIFRlc3QgUEtJMC0GA1UEAwwmU1lOVEhFVElDIFJTQSBTSEEtMSBTaWduZXIgKFRFU1QgT05MWSkwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCowfJThSR436JzF5pyFNfwz7Cjy0VJzkbNoyYipadAJfnTMkl/1puZSyCBwQ5E5cgaUzGbYyF+xyniV52nx2J7sVxph6yeL8MimtIvI2gHv0Z6qmnIRJsse3N4nTj8g/4pOlhWo7zR+yT+McDmcPrqftn/1xHZ6kD4r6QEEoD6/1JEczUjuEqFLiX36BR4DmCuAPSf95ivq4+nJ0dmQcKEFImd4bB5RwgBo+HhdCpp80pFUUNiis3l1cutadHs3R0OmIvuGXEL+34MH8FLTsKPOhIb0glAIOSwpjI7J5BIrX9R5ZbH61cJXX67tQVVgPiiK0oUyFc4t8Pmu0DHGN3fAgMBAAGjIDAeMAwGA1UdEwEB/wQCMAAwDgYDVR0PAQH/BAQDAgHAMAoGCCqGSM49BAMCA0kAMEYCIQDzisI0yXgjYBFt0RGRpY/y4sxOE9NDnQuiGDe7HPVS+gIhAMpA8fk5v4XKDqKkQIkJVBuugDAi1Zpr/BPDwVV3ItbaMYIB2TCCAdUCAQEwVTBQMU4wIQYDVQQKDBpTWU5USEVUSUMgT3BlblNDRyBUZXN0IFBLSTApBgNVBAMMIlNZTlRIRVRJQyBUZXN0IFJvb3QgQ0EgKFRFU1QgT05MWSkCAQgwCQYFKw4DAhoFAKBdMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MTEwMTEyMDAwMFowIwYJKoZIhvcNAQkEMRYEFF+ptf36jfZuc8OWLwlIgCBmGDigMAsGCSqGSIb3DQEBBQSCAQCPCjx5lRU9jbUOQ+hz7fcrKuNT0m03gyshs+/YJNbtXxeQy3BO2spdn/d4lOp8VipygW7V1FrwVpO9TCIEEUlNjs2dOV1g1cTIEipPiII3bUjXMautwpVNRIY0b29Y9twIOTxXcBuai9zsdbwxwN3uZLwef2wbqOhaBoA9gttP4GorEXZTzXBcWbLNMVhbaMuMSttMngbjNTGDlnUgN65jKq8m1akBWKBoUPKdwlj3Y/F0hkJcmV2XXWjKTT8jjvNOhoWTfahQ/dy0D7nL9/ssMSIOpGWChLcW3UIEVHNS4DAhKRsQOaeOlK1llJ2iLiaxi9zYxNx/5lK3wMfYLC5o"
+      "signature": "MIIEkgYJKoZIhvcNAQcCoIIEgzCCBH8CAQExCzAJBgUrDgMCGgUAMAsGCSqGSIb3DQEHAaCCAoEwggJ9MIICJKADAgECAgEIMAoGCCqGSM49BAMCMFAxTjAhBgNVBAoMGlNZTlRIRVRJQyBPcGVuU0NHIFRlc3QgUEtJMCkGA1UEAwwiU1lOVEhFVElDIFRlc3QgUm9vdCBDQSAoVEVTVCBPTkxZKTAeFw0yNjAxMDEwMDAwMDBaFw0zNjAxMDEwMDAwMDBaMFQxUjAhBgNVBAoMGlNZTlRIRVRJQyBPcGVuU0NHIFRlc3QgUEtJMC0GA1UEAwwmU1lOVEhFVElDIFJTQSBTSEEtMSBTaWduZXIgKFRFU1QgT05MWSkwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDY3aNAX7I5U1koQSvXoGNKqneizpl++yoW+/k3ojZH8RTMj4fjkt/weWF1lY+Ev6k5YAeMRbTTn0YMmNf/hcRawTfQbZ3YdohAV04tsn6tAPfArhj+a2uPxd4/DfV8v7hbFtFg5ee656fMQZu7BWIVBUgohrmcXjazLV1ydCe0Qngjd4uYJkLYq2XPuvmx0CSitM2GHzu9ZN9Ya2pjxTldv1HxBOE9G1YRiohJ5wK6yV57JrG3ErVIjvCc3gy6skLo0F2EF2xz1OeEy6bbt6aukongXMbb7iOkAQMbtaqJzcTGZPuqplc9xoiJGlnm6HNQ71zqTbZ0RAF4/Zi33nD9AgMBAAGjIDAeMAwGA1UdEwEB/wQCMAAwDgYDVR0PAQH/BAQDAgHAMAoGCCqGSM49BAMCA0cAMEQCIDuYq0ozund2mD+TiHN/3hP/lLKO1/rgJBhgGipCURXWAiAXJ7ljp5AxCUqerp1oSdBvgyerK204YpoMCXB4F1nNvzGCAdkwggHVAgEBMFUwUDFOMCEGA1UECgwaU1lOVEhFVElDIE9wZW5TQ0cgVGVzdCBQS0kwKQYDVQQDDCJTWU5USEVUSUMgVGVzdCBSb290IENBIChURVNUIE9OTFkpAgEIMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNjExMDExMjAwMDBaMCMGCSqGSIb3DQEJBDEWBBQDXlipn2zAtku0WJ1WrlHhWFxcVTALBgkqhkiG9w0BAQUEggEAOnlQ2altCn38r9mJSIAOHHZ4OEEzb3yn/msRL2LZvzSnYNSo1AVkifEU/9HrzVGFfwnVVq8w7cZc32wRlbH8/7OXeD8ukpXfPC736NJgxMOQpW3Bj18KGycfX5yG5fdegvpHisVKUY+yru1hevkBYSf4ewywhGktOl9gbFZ4NILcilsR021LLR/EJ4aTErC75gOEN4CddlN1nM3LV3XeItAnYBpNdqZM8JbqmMccLpvu1/ZMKoX9e2JoV511yBLuBlvZGI3Jl5XOk0+s+rh2/pjbuB/+4Frr8gB1Awb0NfsmkQdfdtGrRXQGlW9/o8Hm5efHsgIuha8yHJv6XLbPtw=="
     }
   ]
 }

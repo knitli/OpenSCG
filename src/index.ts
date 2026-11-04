@@ -10,7 +10,7 @@
  */
 
 /** The OpenSCG specification version this library implements. */
-export const SPEC_VERSION = "0.1.0-draft";
+export const SPEC_VERSION = "0.1.0";
 
 export {
   APPROVAL_DOMAIN,

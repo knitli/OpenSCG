@@ -1,6 +1,6 @@
 {
   "description": "RFC 8785 canonicalization and strict-parsing vectors for OpenSCG 0.1. Each valid case: parse <input> strictly, canonicalize, and compare byte-for-byte with <expected>. Each invalid case: strict parsing must fail with <error>. Read files as raw bytes.",
-  "spec_version": "0.1.0-draft",
+  "spec_version": "0.1.0",
   "valid": [
     { "id": "rfc8785-example", "input": "rfc8785-example.json", "expected": "rfc8785-example.jcs", "source": "RFC 8785 section 3.2.2" },
     { "id": "rfc8785-sorting", "input": "rfc8785-sorting.json", "expected": "rfc8785-sorting.jcs", "source": "RFC 8785 section 3.2.3" },

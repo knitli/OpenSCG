@@ -1,6 +1,6 @@
 # OpenSCG specification
 
-**Version:** 0.1.0-draft
+**Version:** 0.1.0
 **Status:** Draft for public comment. Not an official government standard. Not legal advice.
 **Schema:** [`schema/0.1/guide.schema.json`](../schema/0.1/guide.schema.json), `$id` `https://openscg.knitli.com/schema/0.1/guide.schema.json`
 
@@ -57,7 +57,7 @@ One program can be several of these.
 
 ### 3.1 Schema version
 
-Every file MUST have `schema_version`. For this version it is exactly `"0.1.0-draft"`. A consumer MUST NOT guess how to read a file whose `schema_version` it does not know; it MUST report it as unsupported (finding `OSCG-V035`, section 7.3) and stop. See [`compatibility.md`](compatibility.md).
+Every file MUST have `schema_version`. For this version it is exactly `"0.1.0"`. A consumer MUST NOT guess how to read a file whose `schema_version` it does not know; it MUST report it as unsupported (finding `OSCG-V035`, section 7.3) and stop. See [`compatibility.md`](compatibility.md).
 
 ### 3.2 Schema identifier
 

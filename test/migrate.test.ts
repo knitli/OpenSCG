@@ -17,13 +17,16 @@ const source = () =>
   );
 
 describe("migration from the requirements illustration", () => {
-  it("maps the profile, infers kinds, and reports the profile change", () => {
+  it("maps the profile, infers kinds, and reports the profile and schema_version changes", () => {
     const r = fromRequirementsIllustration.migrate(source());
     const d = r.document as { profile: string; entries: { kind: string }[]; synthetic: boolean };
     expect(d.profile).toBe("cnsi-core");
     expect(d.entries.map((e) => e.kind)).toEqual(["element", "element", "compilation"]);
     expect(d.synthetic).toBe(true);
-    expect(r.loss.items).toEqual([{ pointer: "/profile", kind: "changed" }]);
+    expect(r.loss.items).toEqual([
+      { pointer: "/schema_version", kind: "changed" },
+      { pointer: "/profile", kind: "changed" },
+    ]);
   });
 
   it("does not invent document markings, so the result is not yet valid", () => {

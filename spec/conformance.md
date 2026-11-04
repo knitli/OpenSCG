@@ -1,6 +1,6 @@
 # OpenSCG conformance procedure
 
-**Suite version:** 0.1.0, for specification 0.1.0-draft
+**Suite version:** 0.1.0, for specification 0.1.0
 **Status:** Draft. Synthetic data only.
 
 This document says how to test an implementation against OpenSCG. You need only this repository's `schema/`, `spec/` and `conformance/` directories. You do not need the reference library.

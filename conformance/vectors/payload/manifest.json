@@ -1,6 +1,6 @@
 {
   "description": "Payload and approval-statement vectors. For each case: parse <guide> strictly, remove the excluded top-level members, canonicalize with RFC 8785, and compare with <payload> byte-for-byte; its SHA-256 is <payload_digest>. Where present, <statement> is the exact signed bytes (domain prefix + canonical statement) built from authority.claimed_signer.",
-  "spec_version": "0.1.0-draft",
+  "spec_version": "0.1.0",
   "excluded_members": [
     "attestations",
     "review"
@@ -12,7 +12,7 @@
       "payload": "requirements-compilation.payload.jcs",
       "payload_digest": {
         "alg": "sha-256",
-        "value": "f33572f94cd67a4e88dc0699309fe8b70c557371cc9bae046d7b78bacca4e3ce"
+        "value": "5ccb17abf69149bc6e10fe1b293938229b02e2f60f2aa005efe349c107244b20"
       }
     },
     {
@@ -21,12 +21,12 @@
       "payload": "synthetic-lantern.payload.jcs",
       "payload_digest": {
         "alg": "sha-256",
-        "value": "ff34d37ca573d1e8b709adb0e517e93414c15cbb2ba435d0bbfe41365aec5bbf"
+        "value": "0707eed223b4539cfd2605e58fac222ef3ea3d51969930497ac7d43f2af8cc42"
       },
       "statement": "synthetic-lantern.statement.bin",
       "statement_digest": {
         "alg": "sha-256",
-        "value": "849d51768c1005fd14a83dfb8436950458094eed90d9a7d8bd8ada0c0657ca81"
+        "value": "9347f3c55955b1772384a2cf7d7d43bf771823852deaea2236bff6fc6e56d229"
       }
     }
   ]

@@ -6,4 +6,4 @@ Written from spec/openscg.md, schema/0.1/guide.schema.json and the conformance
 fixtures. It does not use or import the TypeScript reference library.
 """
 
-SPEC_VERSION = "0.1.0-draft"
+SPEC_VERSION = "0.1.0"

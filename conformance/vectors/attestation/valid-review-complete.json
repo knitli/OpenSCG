@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1.0-draft",
+  "schema_version": "0.1.0",
   "profile": "cnsi-core",
   "synthetic": true,
   "guide_id": "urn:uuid:5e1d0c3a-0000-4000-8000-00000000a001",
@@ -190,20 +190,20 @@
         "purpose": "approve-scg-revision",
         "guide_id": "urn:uuid:5e1d0c3a-0000-4000-8000-00000000a001",
         "revision_id": "2026-r1",
-        "schema_version": "0.1.0-draft",
+        "schema_version": "0.1.0",
         "profile": "cnsi-core",
         "payload_format": "openscg-payload-v1",
         "payload_digest": {
           "alg": "sha-256",
-          "value": "ff34d37ca573d1e8b709adb0e517e93414c15cbb2ba435d0bbfe41365aec5bbf"
+          "value": "0707eed223b4539cfd2605e58fac222ef3ea3d51969930497ac7d43f2af8cc42"
         },
         "signer": {
           "name": "Casey Sample",
           "position": "Director, Example Programs (fictional)"
         },
-        "statement_text": "I approve revision 2026-r1 of the security classification guide \"SYNTHETIC EXAMPLE — Security Classification Guide for the LANTERN Training Sensor (NOT REAL GUIDANCE)\" (urn:uuid:5e1d0c3a-0000-4000-8000-00000000a001), whose OpenSCG payload has SHA-256 digest ff34d37ca573d1e8b709adb0e517e93414c15cbb2ba435d0bbfe41365aec5bbf. This approval covers exactly that content."
+        "statement_text": "I approve revision 2026-r1 of the security classification guide \"SYNTHETIC EXAMPLE — Security Classification Guide for the LANTERN Training Sensor (NOT REAL GUIDANCE)\" (urn:uuid:5e1d0c3a-0000-4000-8000-00000000a001), whose OpenSCG payload has SHA-256 digest 0707eed223b4539cfd2605e58fac222ef3ea3d51969930497ac7d43f2af8cc42. This approval covers exactly that content."
       },
-      "signature": "MIIDHAYJKoZIhvcNAQcCoIIDDTCCAwkCAQExDzANBglghkgBZQMEAgEFADALBgkqhkiG9w0BBwGgggGyMIIBrjCCAVWgAwIBAgIBAzAKBggqhkjOPQQDAjBQMU4wIQYDVQQKDBpTWU5USEVUSUMgT3BlblNDRyBUZXN0IFBLSTApBgNVBAMMIlNZTlRIRVRJQyBUZXN0IFJvb3QgQ0EgKFRFU1QgT05MWSkwHhcNMjYwMTAxMDAwMDAwWhcNMzYwMTAxMDAwMDAwWjBQMU4wIQYDVQQKDBpTWU5USEVUSUMgT3BlblNDRyBUZXN0IFBLSTApBgNVBAMMIlNZTlRIRVRJQyBDYXNleSBTYW1wbGUgKFRFU1QgT05MWSkwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASqpxQrM2jU0GusidemFSt7tLa6uVgni2UiCOCsUbgv5G6chsUhjNEZ3+5DVC446TbpCZctPZ5kSH3QwK4nTpTloyAwHjAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIBwDAKBggqhkjOPQQDAgNHADBEAiBhucPII3u33hbFEPQf5e5K+mupYoh/piM0ttAtD0hocgIgfilGSwKtbEXZUGPs3VgXYbgMgPDkUlp3rRAvmV+Ex2IxggEuMIIBKgIBATBVMFAxTjAhBgNVBAoMGlNZTlRIRVRJQyBPcGVuU0NHIFRlc3QgUEtJMCkGA1UEAwwiU1lOVEhFVElDIFRlc3QgUm9vdCBDQSAoVEVTVCBPTkxZKQIBAzANBglghkgBZQMEAgEFAKBpMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MTEwMTEyMDAwMFowLwYJKoZIhvcNAQkEMSIEIISdUXaMEAX9FKg9+4Q2lQRYCU7tkNmn2L2K2gwGV8qBMAoGCCqGSM49BAMCBEgwRgIhAKCQ8zLLhMl/togEA9UDEpqDgsm3qXrCwwX1Or7vhFP+AiEAl2T51irg2aPK29yk/apX7j8PGys1CL9KWwpmfJwauN4="
+      "signature": "MIIDHAYJKoZIhvcNAQcCoIIDDTCCAwkCAQExDzANBglghkgBZQMEAgEFADALBgkqhkiG9w0BBwGgggGyMIIBrjCCAVWgAwIBAgIBAzAKBggqhkjOPQQDAjBQMU4wIQYDVQQKDBpTWU5USEVUSUMgT3BlblNDRyBUZXN0IFBLSTApBgNVBAMMIlNZTlRIRVRJQyBUZXN0IFJvb3QgQ0EgKFRFU1QgT05MWSkwHhcNMjYwMTAxMDAwMDAwWhcNMzYwMTAxMDAwMDAwWjBQMU4wIQYDVQQKDBpTWU5USEVUSUMgT3BlblNDRyBUZXN0IFBLSTApBgNVBAMMIlNZTlRIRVRJQyBDYXNleSBTYW1wbGUgKFRFU1QgT05MWSkwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARl9m1HamVg8s+sBG6mMh+43EXU4a0ujHAKxXI5UTrMRkTLuRnPcgFAKYTbFvpQhI9YSKu3xwAt+nYZOfMA4MyPoyAwHjAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIBwDAKBggqhkjOPQQDAgNHADBEAiBlnPxr/VRcDoo3IN9cgzg685du0GTGbYoU+ux6THXK4AIgRi68F5QUh3lKuA5x0MmfIQ4K5zo47hiuaXvvkZQOzmcxggEuMIIBKgIBATBVMFAxTjAhBgNVBAoMGlNZTlRIRVRJQyBPcGVuU0NHIFRlc3QgUEtJMCkGA1UEAwwiU1lOVEhFVElDIFRlc3QgUm9vdCBDQSAoVEVTVCBPTkxZKQIBAzANBglghkgBZQMEAgEFAKBpMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MTEwMTEyMDAwMFowLwYJKoZIhvcNAQkEMSIEIJNH88VZVbF3I4Siz319Q793GCOFLerqIja/9vxuVtIpMAoGCCqGSM49BAMCBEgwRgIhAKqfX05MrGkyUn3E+x6BglFu4fpfIKX/6BdnbEN3v6W0AiEA3NKJDuObZO0bmgjzYaGahKf5wrTOp00z9ixawWTsUC0="
     }
   ]
 }

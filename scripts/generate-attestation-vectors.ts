@@ -243,7 +243,7 @@ async function main() {
     json({
       description:
         "SYNTHETIC attestation vectors for OpenSCG 0.1. The CA private keys were discarded after generation. Evaluate every case at verify_at.",
-      spec_version: "0.1.0-draft",
+      spec_version: "0.1.0",
       verify_at: "2026-11-04T00:00:00Z",
       cases,
     }),

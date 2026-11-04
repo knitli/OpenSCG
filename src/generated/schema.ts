@@ -24,7 +24,7 @@ export const GUIDE_SCHEMA_0_1 = {
   properties: {
     schema_version: {
       description: "The OpenSCG specification version this file follows.",
-      const: "0.1.0-draft",
+      const: "0.1.0",
     },
     profile: {
       description:

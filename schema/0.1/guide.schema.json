@@ -18,7 +18,7 @@
   "properties": {
     "schema_version": {
       "description": "The OpenSCG specification version this file follows.",
-      "const": "0.1.0-draft"
+      "const": "0.1.0"
     },
     "profile": {
       "description": "The validation profile. Known profiles in 0.1: cnsi-core, dod-5200.45. Other values are structurally allowed and are reported as unsupported by semantic validation.",

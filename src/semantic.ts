@@ -12,7 +12,7 @@ import {
 } from "./types.js";
 
 /** Schema versions this implementation can read. */
-export const SUPPORTED_SCHEMA_VERSIONS: ReadonlySet<string> = new Set(["0.1.0-draft"]);
+export const SUPPORTED_SCHEMA_VERSIONS: ReadonlySet<string> = new Set(["0.1.0"]);
 
 /** Profiles this implementation knows. */
 export const KNOWN_PROFILES: ReadonlySet<string> = new Set(["cnsi-core", "dod-5200.45"]);

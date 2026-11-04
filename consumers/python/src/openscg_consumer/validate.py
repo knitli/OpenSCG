@@ -197,7 +197,7 @@ def semantic(
     return out
 
 
-SUPPORTED_SCHEMA_VERSIONS = {"0.1.0-draft"}
+SUPPORTED_SCHEMA_VERSIONS = {"0.1.0"}
 
 
 def unsupported_version(doc: Any) -> list[Finding]:

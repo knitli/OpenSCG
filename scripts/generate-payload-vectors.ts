@@ -45,7 +45,7 @@ writeFileSync(
     {
       description:
         "Payload and approval-statement vectors. For each case: parse <guide> strictly, remove the excluded top-level members, canonicalize with RFC 8785, and compare with <payload> byte-for-byte; its SHA-256 is <payload_digest>. Where present, <statement> is the exact signed bytes (domain prefix + canonical statement) built from authority.claimed_signer.",
-      spec_version: "0.1.0-draft",
+      spec_version: "0.1.0",
       excluded_members: ["attestations", "review"],
       cases,
     },

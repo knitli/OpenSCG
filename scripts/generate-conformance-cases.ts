@@ -378,7 +378,7 @@ writeFileSync(
     {
       description:
         "OpenSCG validation conformance cases. See spec/conformance.md for the procedure. All content is SYNTHETIC.",
-      spec_version: "0.1.0-draft",
+      spec_version: "0.1.0",
       suite_version: "0.1.0",
       cases: manifest,
     },

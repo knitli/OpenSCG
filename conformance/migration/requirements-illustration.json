@@ -4,6 +4,7 @@
   "guide_id": "urn:uuid:00000000-0000-4000-8000-000000000001",
   "revision_id": "draft-1",
   "title": "SYNTHETIC EXAMPLE — NOT CLASSIFICATION GUIDANCE",
+  "synthetic": true,
   "entries": [
     { "entry_id": "item-a", "description": "Synthetic feature A", "level": "U" },
     { "entry_id": "item-b", "description": "Synthetic feature B", "level": "U" },

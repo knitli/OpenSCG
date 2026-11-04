@@ -1,6 +1,6 @@
 {
   "name": "@knitli/openscg",
-  "version": "0.1.0-draft.0",
+  "version": "0.1.0",
   "description": "OpenSCG: an open JSON Schema, semantic specification, and conformance suite for structured security classification guides (SCGs). Not an official government standard.",
   "license": "Apache-2.0",
   "author": "Knitli Inc. <hello@knit.li>",

@@ -1,6 +1,6 @@
 # OpenSCG compatibility, extensions, and migration
 
-**Applies to:** specification 0.1.0-draft and later
+**Applies to:** specification 0.1.0 and later
 **Status:** Draft
 
 This document says how OpenSCG changes over time without losing anyone's data, and what an implementation must do with a file from a different version.

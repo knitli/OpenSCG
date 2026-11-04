@@ -1,8 +1,14 @@
 # Changelog
 
-All notable changes to OpenSCG are recorded here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Specification versions follow the rules in `spec/compatibility.md` once it is published.
+All notable changes to OpenSCG are recorded here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Specification versions follow the rules in `spec/compatibility.md`.
 
 ## Unreleased
+
+## 0.1.0 — 2026-11-04
+
+First tagged release. OpenSCG is a proposed open format, not an official government standard.
+
+`schema_version` is now `"0.1.0"`. Files written against the pre-release `"0.1.0-draft"` value are reported as unsupported (`OSCG-V035`) and are not interpreted; rewrite `schema_version` to `"0.1.0"` to use them with this release.
 
 ### Added
 

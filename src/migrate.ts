@@ -95,7 +95,7 @@ const isObject = (v: unknown): v is Record<string, unknown> =>
  */
 export const fromRequirementsIllustration: Migration = {
   id: "requirements-illustration-to-0.1",
-  description: "Illustrative pre-schema excerpt (profile cnsidraft) to OpenSCG 0.1.0-draft",
+  description: "Illustrative pre-schema excerpt (profile cnsidraft) to OpenSCG 0.1.0",
   appliesTo(document) {
     return isObject(document) && document.profile === "cnsidraft";
   },
@@ -111,7 +111,7 @@ export const fromRequirementsIllustration: Migration = {
       if (GUIDE_FIELDS.has(k)) out[k] = v;
       else parked[`/${k}`] = v;
     }
-    out.schema_version = "0.1.0-draft";
+    out.schema_version = "0.1.0";
     out.profile = "cnsi-core";
     notes.push('profile "cnsidraft" was mapped to "cnsi-core".');
     if (!("lifecycle" in out)) out.lifecycle = { state: "draft" };
