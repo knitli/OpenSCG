@@ -1,0 +1,149 @@
+# SPDX-FileCopyrightText: 2026 Knitli Inc.
+# SPDX-License-Identifier: Apache-2.0
+#
+# Release workflow.
+#
+# Pushing a tag like v0.1.0 always:
+#   1. checks the tag matches package.json,
+#   2. runs the full verification,
+#   3. packs the npm tarball and a schema bundle,
+#   4. writes SHA-256 checksums,
+#   5. attaches a GitHub build-provenance attestation, and
+#   6. creates a GitHub release (marked pre-release for -draft/-rc/-alpha/-beta versions).
+#
+# It publishes to npm ONLY when the repository variable NPM_PUBLISH_ENABLED is
+# "true". The publish job runs in the `npm` environment, so a maintainer can also
+# require manual approval there. Publishing uses npm trusted publishing (OIDC),
+# so no long-lived npm token is stored in the repository.
+#
+# To turn publishing on, when ready:
+#   - On npmjs.com, add this repository and workflow (release.yml) as a trusted
+#     publisher for @knitli/openscg.
+#   - In GitHub: Settings → Environments → create `npm` (add required reviewers).
+#   - Settings → Variables → set NPM_PUBLISH_ENABLED = true.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to (re)build, for example v0.1.0"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and attest
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      prerelease: ${{ steps.version.outputs.prerelease }}
+      npm_tag: ${{ steps.version.outputs.npm_tag }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - name: Tag matches package.json
+        id: version
+        env:
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+        run: |
+          TAG="${INPUT_TAG:-${GITHUB_REF#refs/tags/}}"
+          VERSION="${TAG#v}"
+          PKG_VERSION="$(node -p "require('./package.json').version")"
+          if [ "$VERSION" != "$PKG_VERSION" ]; then
+            echo "::error::Tag $TAG does not match package.json version $PKG_VERSION"
+            exit 1
+          fi
+          case "$VERSION" in
+            *-*) PRERELEASE=true; NPM_TAG=next ;;
+            *)   PRERELEASE=false; NPM_TAG=latest ;;
+          esac
+          {
+            echo "version=$VERSION"
+            echo "prerelease=$PRERELEASE"
+            echo "npm_tag=$NPM_TAG"
+          } >> "$GITHUB_OUTPUT"
+      - run: npm ci
+      - run: npm run verify
+      - name: Pack
+        run: |
+          mkdir -p release
+          npm pack --pack-destination release
+          tar -czf "release/openscg-schema-${{ steps.version.outputs.version }}.tar.gz" schema spec LICENSE NOTICE
+          cd release
+          sha256sum ./* > SHA256SUMS
+          cat SHA256SUMS
+      - uses: actions/attest-build-provenance@v3
+        with:
+          subject-path: "release/*"
+      - uses: actions/upload-artifact@v5
+        with:
+          name: release
+          path: release/
+          if-no-files-found: error
+
+  github-release:
+    name: GitHub release
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v5
+        with:
+          name: release
+          path: release
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: v${{ needs.build.outputs.version }}
+          PRERELEASE: ${{ needs.build.outputs.prerelease }}
+        run: |
+          FLAGS=(--repo "$GITHUB_REPOSITORY" --title "OpenSCG $TAG" --notes "See CHANGELOG.md. Verify files with: gh attestation verify <file> --repo $GITHUB_REPOSITORY")
+          if [ "$PRERELEASE" = "true" ]; then FLAGS+=(--prerelease); fi
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release upload "$TAG" release/* --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create "$TAG" release/* "${FLAGS[@]}"
+          fi
+
+  npm-publish:
+    name: Publish to npm
+    needs: build
+    if: vars.NPM_PUBLISH_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v5
+        with:
+          name: release
+          path: release
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          registry-url: "https://registry.npmjs.org"
+      - name: Use an npm that supports trusted publishing
+        run: npm install --global npm@11
+      - name: Publish the attested tarball
+        env:
+          NPM_TAG: ${{ needs.build.outputs.npm_tag }}
+        run: |
+          TARBALL="$(ls release/*.tgz)"
+          npm publish "$TARBALL" --access public --provenance --tag "$NPM_TAG"

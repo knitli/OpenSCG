@@ -1,0 +1,41 @@
+name: Practitioner feedback
+description: You write, approve, or use classification guides and something here does not match how the work is done.
+labels: [feedback, domain]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Synthetic data only.** Do not include real, controlled, or classified information, or text from a restricted template.
+        Sharing feedback does not mean you or your organization endorse OpenSCG. We will not name you without permission.
+  - type: textarea
+    id: what
+    attributes:
+      label: What does not match practice?
+      description: A field name, a rule, a missing concept, a wrong assumption.
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Synthetic example
+      description: An invented example that shows the problem.
+  - type: dropdown
+    id: role
+    attributes:
+      label: Your role (optional)
+      options:
+        [
+          SCG author,
+          OCA or approver,
+          Security or policy staff,
+          Consumer of guides,
+          Developer,
+          Other,
+        ]
+  - type: checkboxes
+    id: synthetic
+    attributes:
+      label: Confirmation
+      options:
+        - label: Everything in this issue is invented or public.
+          required: true

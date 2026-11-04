@@ -1,0 +1,2 @@
+[files]
+extend-exclude = ["package-lock.json", "conformance/**/*.der", "conformance/**/*.pem", "*.b64", "uv.lock"]

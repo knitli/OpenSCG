@@ -1,0 +1,26 @@
+name: Bug
+description: The schema, spec, or library does something wrong.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Synthetic file or steps to reproduce
+      render: json
+  - type: input
+    id: version
+    attributes:
+      label: OpenSCG version
+  - type: checkboxes
+    id: synthetic
+    attributes:
+      label: Confirmation
+      options:
+        - label: Everything in this issue is invented or public.
+          required: true
