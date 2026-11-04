@@ -10,7 +10,9 @@ OpenSCG is an open, machine-readable format for **security classification guides
 
 ## Why it exists
 
-[ISOO FY2025 Annual Report](https://www.archives.gov/files/isoo/reports/isoo-fy-2025-annual-report-final-508.pdf) (pp. 6–8) reviewed SCGs and found guides that did not map levels to specific elements, guides missing declassification instructions, and guides missing classification reasoning. Multiple ISOO and inspectors general reviews over the last twenty years have found the same problems. A structured format provides a baseline for machine validation and checking, simplified user interfaces, and facilitates automation.
+[ISOO FY2025 Annual Report](https://www.archives.gov/files/isoo/reports/isoo-fy-2025-annual-report-final-508.pdf) (pp. 6–8) reviewed SCGs and found guides that did not map levels to specific elements, guides missing declassification instructions, and guides missing classification reasoning. Multiple ISOO and inspectors general reviews over the last twenty years have found the same problems.
+
+A structured format provides a baseline for machine validation and checking, simplified user interfaces, and facilitates automation. DoD-M 5200.42 also requires DoD SCGs to be created in machine and human readable formats that contain the same information, while there is no publicly available schema for SCGs. We developed this schema as a way for the public to contribute to DoD classification modernization and support an open, compliant standard compatible with DoD's goals and public requirements (but not sanctioned by it).
 
 ## What's in this repository
 
