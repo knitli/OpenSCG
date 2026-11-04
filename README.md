@@ -2,7 +2,11 @@
 
 OpenSCG is an open, machine-readable format for **security classification guides (SCGs)**: a JSON Schema, a plain-language specification of what each field means, and a suite of test files that any tool can check itself against.
 
-> **OpenSCG is not an official government standard.** It is a proposed interchange format, maintained in the open by [Knitli](https://www.knitli.com) and any other contributors. A file that passes every OpenSCG check is well-formed and internally consistent with the defined schema. That doesn't make it approved, interchangeable with other formats, or sanctioned by any government authority. OpenSCG aims for compliance with [DoD-M 5200.42's](https://www.esd.whs.mil/Portals/54/Documents/DD/issuances/dodm/520045m.pdf) requirements and guidelines established in [ISOO's SCG Handbook](https://www.archives.gov/files/isoo/training/scg-handbook.pdf). DoD-M 5200.42 serves as a baseline for best practices, and not a requirement for use; other departments and agencies may use or adapt the OpenSCG as they please consistent with the [license](LICENSE).
+> **OpenSCG is not an official government standard.**
+>
+> It is a proposed interchange format, maintained in the open by [Knitli](https://www.knitli.com) and other contributors. A file that passes every OpenSCG check is well-formed and internally consistent with the defined schema. That doesn't make it approved, interchangeable with other formats, or sanctioned by any government authority.
+>
+> OpenSCG aims for compliance with [DoD-M 5200.42's](https://www.esd.whs.mil/Portals/54/Documents/DD/issuances/dodm/520045m.pdf) requirements and guidelines established in [ISOO's SCG Handbook](https://www.archives.gov/files/isoo/training/scg-handbook.pdf). DoD-M 5200.42 serves as a baseline for best practices, and isn't a constraint on using it. Other departments and agencies may use or extend OpenSCG as they please consistent with the [license](LICENSE).
 
 ## Why it exists
 
