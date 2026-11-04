@@ -1,0 +1,22 @@
+{
+  "description": "RFC 8785 canonicalization and strict-parsing vectors for OpenSCG 0.1. Each valid case: parse <input> strictly, canonicalize, and compare byte-for-byte with <expected>. Each invalid case: strict parsing must fail with <error>. Read files as raw bytes.",
+  "spec_version": "0.1.0-draft",
+  "valid": [
+    { "id": "rfc8785-example", "input": "rfc8785-example.json", "expected": "rfc8785-example.jcs", "source": "RFC 8785 section 3.2.2" },
+    { "id": "rfc8785-sorting", "input": "rfc8785-sorting.json", "expected": "rfc8785-sorting.jcs", "source": "RFC 8785 section 3.2.3" },
+    { "id": "numbers", "input": "numbers.json", "expected": "numbers.jcs" },
+    { "id": "nested-and-escapes", "input": "nested-and-escapes.json", "expected": "nested-and-escapes.jcs" }
+  ],
+  "invalid": [
+    { "id": "duplicate-member", "input": "invalid-duplicate-member.json", "error": "OSCG-P003" },
+    { "id": "lone-surrogate", "input": "invalid-lone-surrogate.json", "error": "OSCG-P004" },
+    { "id": "byte-order-mark", "input": "invalid-bom.json", "error": "OSCG-P001" },
+    { "id": "invalid-utf8", "input": "invalid-utf8.json", "error": "OSCG-P001" },
+    { "id": "inexact-integer", "input": "invalid-inexact-integer.json", "error": "OSCG-P005" },
+    { "id": "overflow", "input": "invalid-overflow.json", "error": "OSCG-P005" },
+    { "id": "too-deep", "input": "invalid-too-deep.json", "error": "OSCG-P006" },
+    { "id": "trailing-comma", "input": "invalid-trailing-comma.json", "error": "OSCG-P002" },
+    { "id": "nan", "input": "invalid-nan.json", "error": "OSCG-P002" },
+    { "id": "two-values", "input": "invalid-two-values.json", "error": "OSCG-P002" }
+  ]
+}

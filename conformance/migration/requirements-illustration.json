@@ -1,0 +1,20 @@
+{
+  "schema_version": "0.1.0-draft",
+  "profile": "cnsidraft",
+  "guide_id": "urn:uuid:00000000-0000-4000-8000-000000000001",
+  "revision_id": "draft-1",
+  "title": "SYNTHETIC EXAMPLE — NOT CLASSIFICATION GUIDANCE",
+  "entries": [
+    { "entry_id": "item-a", "description": "Synthetic feature A", "level": "U" },
+    { "entry_id": "item-b", "description": "Synthetic feature B", "level": "U" },
+    {
+      "entry_id": "combined",
+      "description": "A and B together in the stated context",
+      "level": "S",
+      "condition_text": "Both features appear together",
+      "references": ["item-a", "item-b"],
+      "reason": { "categories": ["1.4(a)"], "explanation": "Synthetic training rationale" },
+      "declassification": { "kind": "relative_to_record_creation", "years": 25 }
+    }
+  ]
+}

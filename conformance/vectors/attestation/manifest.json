@@ -1,0 +1,268 @@
+{
+  "description": "SYNTHETIC attestation vectors for OpenSCG 0.1. The CA private keys were discarded after generation. Evaluate every case at verify_at.",
+  "spec_version": "0.1.0-draft",
+  "verify_at": "2026-11-04T00:00:00Z",
+  "cases": [
+    {
+      "id": "valid",
+      "description": "Valid signature; no authority review recorded.",
+      "guide": "valid.json",
+      "trust_anchors": [
+        "root.pem"
+      ],
+      "crls": [
+        "root.crl.pem"
+      ],
+      "expected": {
+        "binding": "ok",
+        "signature": "valid",
+        "algorithm": "permitted",
+        "key_usage": "permitted",
+        "validity": "ok",
+        "trust": "trusted",
+        "revocation": "good",
+        "authority": "not_verified",
+        "technically_valid": true
+      }
+    },
+    {
+      "id": "valid-review-complete",
+      "description": "Same attestation; a human authority review is recorded afterwards. review is outside the payload, so the signature still verifies.",
+      "guide": "valid-review-complete.json",
+      "trust_anchors": [
+        "root.pem"
+      ],
+      "crls": [
+        "root.crl.pem"
+      ],
+      "expected": {
+        "binding": "ok",
+        "signature": "valid",
+        "algorithm": "permitted",
+        "key_usage": "permitted",
+        "validity": "ok",
+        "trust": "trusted",
+        "revocation": "good",
+        "authority": "review_complete",
+        "technically_valid": true
+      }
+    },
+    {
+      "id": "altered-payload",
+      "description": "An entry was changed after signing.",
+      "guide": "altered-payload.json",
+      "trust_anchors": [
+        "root.pem"
+      ],
+      "crls": [
+        "root.crl.pem"
+      ],
+      "expected": {
+        "binding": "mismatch",
+        "signature": "valid",
+        "algorithm": "permitted",
+        "key_usage": "permitted",
+        "validity": "ok",
+        "trust": "trusted",
+        "revocation": "good",
+        "authority": "not_verified",
+        "technically_valid": false
+      }
+    },
+    {
+      "id": "altered-statement",
+      "description": "The stored statement was edited after signing.",
+      "guide": "altered-statement.json",
+      "trust_anchors": [
+        "root.pem"
+      ],
+      "crls": [
+        "root.crl.pem"
+      ],
+      "expected": {
+        "binding": "mismatch",
+        "signature": "invalid",
+        "algorithm": "permitted",
+        "key_usage": "permitted",
+        "validity": "ok",
+        "trust": "trusted",
+        "revocation": "good",
+        "authority": "not_verified",
+        "technically_valid": false
+      }
+    },
+    {
+      "id": "tampered-signature",
+      "description": "One bit of the signature value was flipped.",
+      "guide": "tampered-signature.json",
+      "trust_anchors": [
+        "root.pem"
+      ],
+      "crls": [
+        "root.crl.pem"
+      ],
+      "expected": {
+        "binding": "ok",
+        "signature": "invalid",
+        "algorithm": "permitted",
+        "key_usage": "permitted",
+        "validity": "ok",
+        "trust": "trusted",
+        "revocation": "good",
+        "authority": "not_verified",
+        "technically_valid": false
+      }
+    },
+    {
+      "id": "wrong-trust-anchor",
+      "description": "Signed by a certificate from a root the verifier does not trust.",
+      "guide": "wrong-trust-anchor.json",
+      "trust_anchors": [
+        "root.pem"
+      ],
+      "crls": [
+        "root.crl.pem"
+      ],
+      "expected": {
+        "binding": "ok",
+        "signature": "valid",
+        "algorithm": "permitted",
+        "key_usage": "permitted",
+        "validity": "ok",
+        "trust": "untrusted",
+        "revocation": "not_checked",
+        "authority": "not_verified",
+        "technically_valid": false
+      }
+    },
+    {
+      "id": "expired",
+      "description": "The signer certificate expired before the verification time.",
+      "guide": "expired.json",
+      "trust_anchors": [
+        "root.pem"
+      ],
+      "crls": [
+        "root.crl.pem"
+      ],
+      "expected": {
+        "binding": "ok",
+        "signature": "valid",
+        "algorithm": "permitted",
+        "key_usage": "permitted",
+        "validity": "expired",
+        "trust": "trusted",
+        "revocation": "good",
+        "authority": "not_verified",
+        "technically_valid": false
+      }
+    },
+    {
+      "id": "revoked",
+      "description": "The signer certificate is listed on the CRL.",
+      "guide": "revoked.json",
+      "trust_anchors": [
+        "root.pem"
+      ],
+      "crls": [
+        "root.crl.pem"
+      ],
+      "expected": {
+        "binding": "ok",
+        "signature": "valid",
+        "algorithm": "permitted",
+        "key_usage": "permitted",
+        "validity": "ok",
+        "trust": "trusted",
+        "revocation": "revoked",
+        "authority": "not_verified",
+        "technically_valid": false
+      }
+    },
+    {
+      "id": "revocation-unknown",
+      "description": "No CRL is available; default policy fails closed.",
+      "guide": "revocation-unknown.json",
+      "trust_anchors": [
+        "root.pem"
+      ],
+      "crls": [],
+      "expected": {
+        "binding": "ok",
+        "signature": "valid",
+        "algorithm": "permitted",
+        "key_usage": "permitted",
+        "validity": "ok",
+        "trust": "trusted",
+        "revocation": "unknown",
+        "authority": "not_verified",
+        "technically_valid": false
+      }
+    },
+    {
+      "id": "revocation-unknown-accepted",
+      "description": "No CRL is available; local policy explicitly accepts unknown status.",
+      "guide": "revocation-unknown-accepted.json",
+      "trust_anchors": [
+        "root.pem"
+      ],
+      "crls": [],
+      "unknown_revocation": "accept",
+      "expected": {
+        "binding": "ok",
+        "signature": "valid",
+        "algorithm": "permitted",
+        "key_usage": "permitted",
+        "validity": "ok",
+        "trust": "trusted",
+        "revocation": "unknown",
+        "authority": "not_verified",
+        "technically_valid": true
+      }
+    },
+    {
+      "id": "sha1",
+      "description": "Signed with RSA and SHA-1, which the default policy does not permit.",
+      "guide": "sha1.json",
+      "trust_anchors": [
+        "root.pem"
+      ],
+      "crls": [
+        "root.crl.pem"
+      ],
+      "expected": {
+        "binding": "ok",
+        "signature": "valid",
+        "algorithm": "not_permitted",
+        "key_usage": "permitted",
+        "validity": "ok",
+        "trust": "trusted",
+        "revocation": "good",
+        "authority": "not_verified",
+        "technically_valid": false
+      }
+    },
+    {
+      "id": "authentication-certificate",
+      "description": "Signed with an authentication-only certificate (no nonRepudiation key usage).",
+      "guide": "authentication-certificate.json",
+      "trust_anchors": [
+        "root.pem"
+      ],
+      "crls": [
+        "root.crl.pem"
+      ],
+      "expected": {
+        "binding": "ok",
+        "signature": "valid",
+        "algorithm": "permitted",
+        "key_usage": "not_permitted",
+        "validity": "ok",
+        "trust": "trusted",
+        "revocation": "good",
+        "authority": "not_verified",
+        "technically_valid": false
+      }
+    }
+  ]
+}

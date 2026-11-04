@@ -1,0 +1,21 @@
+name: Format change idea
+description: An idea that may become a proposal. Larger changes need a written proposal; see docs/proposals.
+labels: [proposal-idea]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Idea
+  - type: checkboxes
+    id: synthetic
+    attributes:
+      label: Confirmation
+      options:
+        - label: Everything in this issue is invented or public.
+          required: true

@@ -1,0 +1,77 @@
+{
+  "schema_version": "0.1.0-draft",
+  "profile": "cnsi-core",
+  "synthetic": true,
+  "guide_id": "urn:uuid:5e1d0c3a-0000-4000-8000-00000000a001",
+  "revision_id": "2026-r1",
+  "title": "SYNTHETIC EXAMPLE — Security Classification Guide for the LANTERN Training Sensor (NOT REAL GUIDANCE)",
+  "subject": "The fictional LANTERN training sensor, invented to demonstrate the OpenSCG format.",
+  "scope": "Applies only to this demonstration. Contains no real classification guidance and must not be used to classify anything.",
+  "issuing_organization": {
+    "name": "Example Agency (fictional)",
+    "identifier": "EXA"
+  },
+  "point_of_contact": {
+    "name": "Jordan Example",
+    "position": "Security Program Manager (fictional)",
+    "email": "poc@example.org"
+  },
+  "oca": {
+    "name": "Casey Sample",
+    "position": "Director, Example Programs (fictional)"
+  },
+  "dates": {
+    "issued": "2026-10-01",
+    "next_review_due": "2031-10-01"
+  },
+  "lifecycle": {
+    "state": "candidate"
+  },
+  "document_markings": {
+    "classification": "U",
+    "banner": "UNCLASSIFIED — SYNTHETIC EXAMPLE",
+    "review": {
+      "status": "complete",
+      "reviewed_by": "SYNTHETIC Reviewer"
+    }
+  },
+  "introduction": "This synthetic guide shows each kind of OpenSCG entry: an unclassified element, classified elements, a level range with conditions, an exemption, and a compilation.",
+  "sections": [
+    {
+      "section_id": "general",
+      "title": "General program information",
+      "portion_marking": "(U)"
+    },
+    {
+      "section_id": "performance",
+      "title": "Performance",
+      "portion_marking": "(U)"
+    }
+  ],
+  "entries": [
+    {
+      "entry_id": "gen-name",
+      "kind": "element",
+      "section_id": "general",
+      "portion_marking": "(U)",
+      "description": "The program name LANTERN and the fact that the program exists.",
+      "level": "U",
+      "statements": {
+        "unclassified": "The name is used in public outreach material."
+      }
+    }
+  ],
+  "authority": {
+    "claimed_signer": {
+      "name": "Casey Sample",
+      "position": "Director, Example Programs (fictional)"
+    },
+    "claimed_delegation": {
+      "highest_level": "S",
+      "program": "LANTERN (fictional)"
+    }
+  },
+  "review": {
+    "status": "not_started"
+  }
+}

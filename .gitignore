@@ -147,3 +147,11 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# OpenSCG
+dist/
+release/
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
