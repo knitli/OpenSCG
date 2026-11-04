@@ -57,7 +57,7 @@ One program can be several of these.
 
 ### 3.1 Schema version
 
-Every file MUST have `schema_version`. For this version it is exactly `"0.1.0-draft"`. A consumer MUST NOT guess how to read a file whose `schema_version` it does not know; it MUST report it as unsupported.
+Every file MUST have `schema_version`. For this version it is exactly `"0.1.0-draft"`. A consumer MUST NOT guess how to read a file whose `schema_version` it does not know; it MUST report it as unsupported (finding `OSCG-V035`, section 7.3) and stop. See [`compatibility.md`](compatibility.md).
 
 ### 3.2 Schema identifier
 
@@ -294,13 +294,14 @@ Recording `authority` evidence clears OSCG-V020, but it does not **verify** the 
 
 **Unsupported and unverified**
 
-| Code      | Severity    | Rule                                                                                            |
-| --------- | ----------- | ----------------------------------------------------------------------------------------------- |
-| OSCG-V030 | unsupported | An entry has `regime: "aea"`.                                                                   |
-| OSCG-V031 | unsupported | The `profile` is not known to the implementation.                                               |
-| OSCG-V032 | warning     | The profile is `dod-5200.45`, which is unverified (5.2).                                        |
-| OSCG-V033 | unsupported | An extension with `must_understand: true` is not supported by the implementation.               |
-| OSCG-V034 | warning     | An extension with `must_understand: false` is not recognized. It is preserved, not interpreted. |
+| Code      | Severity    | Rule                                                                                                                                        |
+| --------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| OSCG-V030 | unsupported | An entry has `regime: "aea"`.                                                                                                               |
+| OSCG-V031 | unsupported | The `profile` is not known to the implementation.                                                                                           |
+| OSCG-V032 | warning     | The profile is `dod-5200.45`, which is unverified (5.2).                                                                                    |
+| OSCG-V033 | unsupported | An extension with `must_understand: true` is not supported by the implementation.                                                           |
+| OSCG-V034 | warning     | An extension with `must_understand: false` is not recognized. It is preserved, not interpreted.                                             |
+| OSCG-V035 | unsupported | The `schema_version` is not supported by the implementation. Validators report only this finding and do not interpret the rest of the file. |
 
 **Guide-level content** (32 CFR 2001.15(b) and E.O. 13526 §2.2(b))
 

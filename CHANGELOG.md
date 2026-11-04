@@ -18,3 +18,8 @@ All notable changes to OpenSCG are recorded here. The format follows [Keep a Cha
 - Conformance vectors: canonicalization (including RFC 8785 examples), payload and statement bytes, and twelve synthetic attestation cases.
 - Conformance suite (`conformance/manifest.json`, 35 validation cases with hand-written expected results) and the versioned test procedure `spec/conformance.md` (suite 0.1.0).
 - An independent Python consumer (`consumers/python`) that passes the whole suite using only published materials, OpenSSL and `asn1crypto`. Run in CI.
+- `spec/compatibility.md`: versioning, what counts as breaking with accepted and rejected examples, extension namespaces (`org.openscg.` reserved), migration rules, reading other versions, deprecation.
+- Finding `OSCG-V035` for an unsupported `schema_version` (proposal 0001), in both implementations and the suite.
+- Migration interface with loss reporting, and a worked migration from the requirements' illustrative excerpt.
+- Proposals 0001 (non-breaking, implemented) and 0002 (breaking, draft); a pre-release acceptance rule in GOVERNANCE.md.
+- Release guide, open-questions tracker, and requirements traceability matrix.

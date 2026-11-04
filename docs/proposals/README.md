@@ -23,6 +23,7 @@ A proposal is how the format changes. Anything that changes what is valid, what 
 
 ## Index
 
-| #   | Title | State |
-| --- | ----- | ----- |
-| —   | —     | —     |
+| #                                                  | Title                                                           | State                     |
+| -------------------------------------------------- | --------------------------------------------------------------- | ------------------------- |
+| [0001](0001-unsupported-schema-version-finding.md) | A finding code for an unsupported schema_version (non-breaking) | Implemented (0.1.0-draft) |
+| [0002](0002-structured-level-conditions.md)        | Structured conditions for level ranges (breaking)               | Draft                     |

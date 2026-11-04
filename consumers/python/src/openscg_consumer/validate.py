@@ -22,7 +22,7 @@ SEVERITY = {
     **dict.fromkeys(
         ["V015", "V017", "V018", "V019", "V022", "V023", "V032", "V034", "V052"], "warning"
     ),
-    **dict.fromkeys(["V030", "V031", "V033"], "unsupported"),
+    **dict.fromkeys(["V030", "V031", "V033", "V035"], "unsupported"),
     **dict.fromkeys(["V020", "V021", "V046"], "policy_review"),
 }
 BLOCKING = {"error", "unsupported", "policy_review"}
@@ -195,6 +195,17 @@ def semantic(
 
     extensions(doc.get("extensions"), ())
     return out
+
+
+SUPPORTED_SCHEMA_VERSIONS = {"0.1.0-draft"}
+
+
+def unsupported_version(doc: Any) -> list[Finding]:
+    """Spec section 3.1: report an unknown schema_version instead of interpreting it."""
+    version = doc.get("schema_version") if isinstance(doc, dict) else None
+    if isinstance(version, str) and version not in SUPPORTED_SCHEMA_VERSIONS:
+        return [Finding("OSCG-V035", "unsupported", "/schema_version")]
+    return []
 
 
 def approval_ready(findings: list[Finding]) -> bool:

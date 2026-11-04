@@ -220,6 +220,14 @@ describe("unsupported and unverified", () => {
     expect(isApprovalReady(fs)).toBe(false);
   });
 
+  it("unsupported schema version is reported without interpretation", () => {
+    const d = ready();
+    d.schema_version = "0.2.0";
+    d.entries[0].level = "NOT-A-LEVEL";
+    const fs = expectOnly(d, "OSCG-V035", "/schema_version");
+    expect(isApprovalReady(fs)).toBe(false);
+  });
+
   it("unknown profile", () => {
     const d = ready();
     d.profile = "example-profile";

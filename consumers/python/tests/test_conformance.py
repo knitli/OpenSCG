@@ -20,7 +20,13 @@ from openscg_consumer.attest import (
 )
 from openscg_consumer.jcs import canonicalize
 from openscg_consumer.strict import StrictParseError, parse_strict
-from openscg_consumer.validate import approval_ready, load_schema, semantic, structurally_valid
+from openscg_consumer.validate import (
+    approval_ready,
+    load_schema,
+    semantic,
+    structurally_valid,
+    unsupported_version,
+)
 
 REPO = Path(__file__).resolve().parents[3]
 CONF = REPO / "conformance"
@@ -48,6 +54,12 @@ def test_validation_case(case: dict) -> None:
         assert e.value.code == exp["parse_error"]
         return
     doc = parse_strict(data)
+    version = unsupported_version(doc)
+    if version:
+        got = [{"code": f.code, "pointer": f.pointer} for f in version]
+        assert got == exp["findings"]
+        assert exp["approval_ready"] is False
+        return
     valid = structurally_valid(VALIDATOR, doc)
     assert ("valid" if valid else "invalid") == exp["structure"]
     if not valid:

@@ -11,6 +11,9 @@ import {
   type Level,
 } from "./types.js";
 
+/** Schema versions this implementation can read. */
+export const SUPPORTED_SCHEMA_VERSIONS: ReadonlySet<string> = new Set(["0.1.0-draft"]);
+
 /** Profiles this implementation knows. */
 export const KNOWN_PROFILES: ReadonlySet<string> = new Set(["cnsi-core", "dod-5200.45"]);
 
@@ -68,6 +71,7 @@ export const RULES = {
     severity: "warning",
     summary: "Unrecognized extension preserved but not interpreted",
   },
+  "OSCG-V035": { severity: "unsupported", summary: "Unsupported schema_version" },
   "OSCG-V040": { severity: "error", summary: "Guide has no subject" },
   "OSCG-V041": { severity: "error", summary: "Guide has no OCA" },
   "OSCG-V042": { severity: "error", summary: "Guide has no point of contact" },
@@ -408,6 +412,20 @@ export function validateSemantics(guide: Guide, options: ValidateOptions = {}): 
  * detect", not "compliant".
  */
 export function validate(document: unknown, options: ValidateOptions = {}): Finding[] {
+  // Specification section 3.1: never guess how to read an unknown version.
+  if (typeof document === "object" && document !== null && !Array.isArray(document)) {
+    const version = (document as { schema_version?: unknown }).schema_version;
+    if (typeof version === "string" && !SUPPORTED_SCHEMA_VERSIONS.has(version)) {
+      return [
+        {
+          code: "OSCG-V035",
+          severity: RULES["OSCG-V035"].severity,
+          pointer: "/schema_version",
+          message: `This implementation does not support schema_version "${version}". It has not tried to interpret the file.`,
+        },
+      ];
+    }
+  }
   const structural = validateStructure(document);
   if (structural.length > 0) return structural;
   return validateSemantics(document as Guide, options);

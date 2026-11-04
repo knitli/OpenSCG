@@ -57,7 +57,13 @@ Signing keys are never created or stored by this library. `createAttestation()` 
 
 ## Status
 
-Pre-release draft (`0.1.0-draft`). See [the implementation plan](docs/plan/IMPLEMENTATION_PLAN.md) for what is planned and what is deliberately out of scope.
+Pre-release draft (`0.1.0-draft`). See [the implementation plan](docs/plan/IMPLEMENTATION_PLAN.md), [requirements traceability](docs/requirements-traceability.md), and [open questions](docs/open-questions.md).
+
+| Document                                         | What it covers                  |
+| ------------------------------------------------ | ------------------------------- |
+| [`spec/openscg.md`](spec/openscg.md)             | The specification               |
+| [`spec/conformance.md`](spec/conformance.md)     | How to test an implementation   |
+| [`spec/compatibility.md`](spec/compatibility.md) | Versions, extensions, migration |
 
 ## Getting involved
 

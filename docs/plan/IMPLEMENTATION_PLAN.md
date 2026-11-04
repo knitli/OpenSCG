@@ -1,6 +1,6 @@
 # OpenSCG implementation plan
 
-**Status:** Working plan, November 4, 2026. Not legal advice.
+**Status:** Working plan, November 4, 2026. Phases 0–5 implemented; see [requirements traceability](../requirements-traceability.md) for evidence and remaining gaps. Not legal advice.
 **Scope:** OpenSCG only — the schema, the semantic specification, the conformance suite, and a small reference library. Imprint (the authoring application) is a separate project and is out of scope here, except where this plan names what Imprint consumes.
 
 ## What OpenSCG is, in one paragraph

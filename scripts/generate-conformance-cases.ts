@@ -239,6 +239,15 @@ semantic(
   [["OSCG-V030", "/entries/2/regime"]],
   false,
 );
+cases.push({
+  id: "unsupported-schema-version",
+  description:
+    "A file from a version this suite does not cover is reported as unsupported, not interpreted.",
+  doc: { ...ready(), schema_version: "0.2.0" },
+  structure: "invalid",
+  findings: [["OSCG-V035", "/schema_version"]],
+  approval_ready: false,
+});
 semantic(
   "unknown-profile",
   "An unknown profile is unsupported.",

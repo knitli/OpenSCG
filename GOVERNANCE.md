@@ -35,6 +35,10 @@ None of these steps has happened yet.
 3. Every proposal must include: compatibility impact, security review, new or changed test vectors, and a migration note if it breaks anything.
 4. Maintainers accept, reject, or ask for changes, and record their reasons in the proposal.
 
+### Before the first tagged release
+
+Until the first tagged release, the format is still being drafted. Maintainers MAY accept a proposal without the comment period, so long as the proposal is written up in full, marked "accepted under the pre-release rule," and reopened for comment when the first tagged release is published. Nothing accepted this way is final until that comment period ends.
+
 ## Disagreements
 
 Raise it on the issue or pull request first. If that does not resolve it, ask the maintainers to decide; they will write down their reasoning. If you think the process itself was not followed, open an issue labeled `governance`.

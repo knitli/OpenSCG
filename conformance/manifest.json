@@ -278,6 +278,21 @@
       }
     },
     {
+      "id": "unsupported-schema-version",
+      "description": "A file from a version this suite does not cover is reported as unsupported, not interpreted.",
+      "file": "cases/unsupported-schema-version.json",
+      "expected": {
+        "structure": "invalid",
+        "findings": [
+          {
+            "code": "OSCG-V035",
+            "pointer": "/schema_version"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
       "id": "unknown-profile",
       "description": "An unknown profile is unsupported.",
       "file": "cases/unknown-profile.json",

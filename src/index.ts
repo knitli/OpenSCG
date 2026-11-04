@@ -73,6 +73,13 @@ export {
   verifyReleaseManifest,
 } from "./manifest.js";
 export {
+  fromRequirementsIllustration,
+  MIGRATION_NAMESPACE,
+  MIGRATIONS,
+  type Migration,
+  type MigrationResult,
+} from "./migrate.js";
+export {
   type Digest,
   PAYLOAD_EXCLUDED_MEMBERS,
   PAYLOAD_FORMAT,
@@ -86,6 +93,7 @@ export {
   KNOWN_PROFILES,
   RULES,
   type RuleCode,
+  SUPPORTED_SCHEMA_VERSIONS,
   type ValidateOptions,
   validate,
   validateSemantics,
