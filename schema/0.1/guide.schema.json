@@ -1,0 +1,526 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openscg.knitli.com/schema/0.1/guide.schema.json",
+  "title": "OpenSCG guide",
+  "description": "A structured security classification guide (SCG) in the OpenSCG interchange format, version 0.1. This schema checks structure only. Semantic rules (references, profile requirements, approval readiness) are in the OpenSCG specification. Passing this schema does not make a guide lawful, approved, or correct. OpenSCG is not an official government standard.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "profile",
+    "guide_id",
+    "revision_id",
+    "title",
+    "lifecycle",
+    "document_markings",
+    "entries"
+  ],
+  "properties": {
+    "schema_version": {
+      "description": "The OpenSCG specification version this file follows.",
+      "const": "0.1.0-draft"
+    },
+    "profile": {
+      "description": "The validation profile. Known profiles in 0.1: cnsi-core, dod-5200.45. Other values are structurally allowed and are reported as unsupported by semantic validation.",
+      "$ref": "#/$defs/token"
+    },
+    "synthetic": {
+      "description": "True when the guide is invented for training, testing, or demonstration. Implementations should display this prominently.",
+      "type": "boolean"
+    },
+    "guide_id": {
+      "description": "Stable identifier for the guide across all revisions. An absolute URI; urn:uuid is recommended.",
+      "$ref": "#/$defs/absolute_uri"
+    },
+    "revision_id": {
+      "description": "Human-readable identifier for this revision, unique within the guide.",
+      "$ref": "#/$defs/local_id"
+    },
+    "title": { "$ref": "#/$defs/text" },
+    "subject": {
+      "description": "The subject matter the guide covers (32 CFR 2001.15(b)(1)).",
+      "$ref": "#/$defs/text"
+    },
+    "scope": {
+      "description": "What the guide applies to and what it does not.",
+      "$ref": "#/$defs/text"
+    },
+    "issuing_organization": { "$ref": "#/$defs/organization" },
+    "point_of_contact": { "$ref": "#/$defs/contact" },
+    "oca": { "$ref": "#/$defs/oca" },
+    "dates": { "$ref": "#/$defs/dates" },
+    "lifecycle": { "$ref": "#/$defs/lifecycle" },
+    "document_markings": { "$ref": "#/$defs/document_markings" },
+    "introduction": {
+      "description": "Explanatory front matter, such as purpose, applicability, and how to use the guide.",
+      "$ref": "#/$defs/text"
+    },
+    "sections": {
+      "description": "Optional grouping of entries for display.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/section" }
+    },
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry" }
+    },
+    "authority": { "$ref": "#/$defs/authority_claim" },
+    "history": { "$ref": "#/$defs/history" },
+    "extensions": { "$ref": "#/$defs/extensions" },
+    "review": {
+      "description": "Human authority review of the signer's delegation, recorded after signing. Excluded from the signed payload.",
+      "$ref": "#/$defs/authority_review"
+    },
+    "attestations": {
+      "description": "Detached approval attestations. Excluded from the signed payload.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/attestation" }
+    }
+  },
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100000
+    },
+    "short_text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "token": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9.-]{0,63}$"
+    },
+    "local_id": {
+      "description": "An identifier unique within its scope: letters, digits, dot, underscore, hyphen; up to 64 characters.",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+    },
+    "absolute_uri": {
+      "type": "string",
+      "format": "uri",
+      "maxLength": 2048
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "level": {
+      "description": "U = Unclassified, C = Confidential, S = Secret, TS = Top Secret.",
+      "enum": ["U", "C", "S", "TS"]
+    },
+    "category": {
+      "description": "An E.O. 13526 section 1.4 category.",
+      "enum": ["1.4(a)", "1.4(b)", "1.4(c)", "1.4(d)", "1.4(e)", "1.4(f)", "1.4(g)", "1.4(h)"]
+    },
+    "regime": {
+      "description": "The legal regime the guidance falls under. cnsi = classified national security information under E.O. 13526. aea = Atomic Energy Act information (RD, FRD, TFNI); not supported in 0.1.",
+      "enum": ["cnsi", "aea"]
+    },
+    "organization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "$ref": "#/$defs/short_text" },
+        "identifier": { "$ref": "#/$defs/short_text" }
+      }
+    },
+    "contact": {
+      "description": "Agency point of contact for questions about the guide (32 CFR 2001.15(b)(3)).",
+      "type": "object",
+      "additionalProperties": false,
+      "anyOf": [{ "required": ["name"] }, { "required": ["position"] }],
+      "properties": {
+        "name": { "$ref": "#/$defs/short_text" },
+        "position": { "$ref": "#/$defs/short_text" },
+        "organization": { "$ref": "#/$defs/short_text" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "$ref": "#/$defs/short_text" }
+      }
+    },
+    "oca": {
+      "description": "The original classification authority who approves the guide, by name and position, or by personal identifier (32 CFR 2001.15(b)(2)).",
+      "type": "object",
+      "additionalProperties": false,
+      "anyOf": [{ "required": ["name", "position"] }, { "required": ["personal_identifier"] }],
+      "properties": {
+        "name": { "$ref": "#/$defs/short_text" },
+        "position": { "$ref": "#/$defs/short_text" },
+        "personal_identifier": { "$ref": "#/$defs/short_text" },
+        "highest_level": {
+          "description": "The highest level at which this OCA claims authority. A claim, not verified by this format.",
+          "$ref": "#/$defs/level"
+        }
+      }
+    },
+    "dates": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "issued": { "$ref": "#/$defs/date" },
+        "last_reviewed": { "$ref": "#/$defs/date" },
+        "effective": { "$ref": "#/$defs/date" },
+        "next_review_due": { "$ref": "#/$defs/date" }
+      }
+    },
+    "guide_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["guide_id"],
+      "properties": {
+        "guide_id": { "$ref": "#/$defs/absolute_uri" },
+        "revision_id": { "$ref": "#/$defs/local_id" },
+        "title": { "$ref": "#/$defs/short_text" }
+      }
+    },
+    "lifecycle": {
+      "description": "The recorded state of this revision. 'issued', 'superseded' and 'cancelled' record what a person says the organization did; software never infers them from a signature.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state"],
+      "properties": {
+        "state": { "enum": ["draft", "candidate", "issued", "superseded", "cancelled"] },
+        "supersedes": { "type": "array", "items": { "$ref": "#/$defs/guide_ref" } },
+        "superseded_by": { "type": "array", "items": { "$ref": "#/$defs/guide_ref" } },
+        "note": { "$ref": "#/$defs/text" }
+      }
+    },
+    "marking_review": {
+      "description": "Whether an authorized person has reviewed these markings. Software does not decide markings.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["not_started", "pending", "complete"] },
+        "reviewed_by": { "$ref": "#/$defs/short_text" },
+        "reviewed_on": { "$ref": "#/$defs/date" }
+      }
+    },
+    "classification_authority_block": {
+      "description": "The guide document's own classification authority block, as it appears on the document.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "classified_by": { "$ref": "#/$defs/short_text" },
+        "derived_from": { "$ref": "#/$defs/short_text" },
+        "reason": { "$ref": "#/$defs/short_text" },
+        "declassify_on": { "$ref": "#/$defs/short_text" }
+      }
+    },
+    "document_markings": {
+      "description": "The classification and markings of the SCG document itself. These are separate from the guidance the guide gives about other information, and are never inferred from the highest entry.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification"],
+      "properties": {
+        "classification": { "$ref": "#/$defs/level" },
+        "banner": {
+          "description": "The banner line exactly as it is to appear on the document.",
+          "$ref": "#/$defs/short_text"
+        },
+        "controls": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/short_text" }
+        },
+        "classification_authority_block": { "$ref": "#/$defs/classification_authority_block" },
+        "review": { "$ref": "#/$defs/marking_review" }
+      }
+    },
+    "section": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["section_id", "title"],
+      "properties": {
+        "section_id": { "$ref": "#/$defs/local_id" },
+        "title": { "$ref": "#/$defs/short_text" },
+        "portion_marking": { "$ref": "#/$defs/short_text" },
+        "description": { "$ref": "#/$defs/text" }
+      }
+    },
+    "control": {
+      "description": "A control or handling marking that applies to information described by an entry, such as a dissemination control or CUI category.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["marking", "kind"],
+      "properties": {
+        "marking": { "$ref": "#/$defs/short_text" },
+        "kind": { "enum": ["dissemination", "cui", "handling", "sci", "sap", "other"] },
+        "note": { "$ref": "#/$defs/text" }
+      }
+    },
+    "reason": {
+      "description": "Why the information is classified: a concise explanation and the E.O. 13526 section 1.4 categories it falls under.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["categories", "explanation"],
+      "properties": {
+        "categories": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/category" }
+        },
+        "explanation": { "$ref": "#/$defs/text" }
+      }
+    },
+    "evidence": {
+      "description": "A pointer to supporting evidence. Recording evidence is not verifying it.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference"],
+      "properties": {
+        "kind": { "enum": ["iscap_approval", "agency_notice", "delegation", "other"] },
+        "reference": { "$ref": "#/$defs/short_text" },
+        "date": { "$ref": "#/$defs/date" },
+        "uri": { "$ref": "#/$defs/absolute_uri" }
+      }
+    },
+    "declassification": {
+      "description": "When or how the information described by the entry is to be declassified.",
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "date"],
+          "properties": {
+            "kind": { "const": "date" },
+            "date": { "$ref": "#/$defs/date" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "event_text"],
+          "properties": {
+            "kind": { "const": "event" },
+            "event_text": { "$ref": "#/$defs/text" }
+          }
+        },
+        {
+          "description": "A duration measured from the creation of the record that contains the information. Never computed from the guide's own dates.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "years"],
+          "properties": {
+            "kind": { "const": "relative_to_record_creation" },
+            "years": { "type": "integer", "minimum": 1, "maximum": 75 }
+          }
+        },
+        {
+          "description": "An exemption code, such as 25X1 or 50X1-HUM. Choosing a code does not prove the exemption was approved.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "code"],
+          "properties": {
+            "kind": { "const": "exemption" },
+            "code": {
+              "type": "string",
+              "pattern": "^(25X[1-9]|50X1-HUM|50X2-WMD|50X[1-9]|75X[1-9])$"
+            },
+            "until_date": { "$ref": "#/$defs/date" },
+            "until_event_text": { "$ref": "#/$defs/text" },
+            "authority": { "$ref": "#/$defs/evidence" }
+          }
+        }
+      ]
+    },
+    "level_range": {
+      "description": "A range of possible levels. Requires a statement of the conditions that decide which level applies.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lowest", "highest", "condition_text"],
+      "properties": {
+        "lowest": { "$ref": "#/$defs/level" },
+        "highest": { "$ref": "#/$defs/level" },
+        "condition_text": { "$ref": "#/$defs/text" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["citation"],
+      "properties": {
+        "citation": { "$ref": "#/$defs/short_text" },
+        "uri": { "$ref": "#/$defs/absolute_uri" }
+      }
+    },
+    "statements": {
+      "description": "Optional explanatory statements recommended by the ISOO SCG handbook. Guidance, not legal requirements.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "value": { "$ref": "#/$defs/text" },
+        "damage": { "$ref": "#/$defs/text" },
+        "unclassified": { "$ref": "#/$defs/text" }
+      }
+    },
+    "entry": {
+      "description": "One item of guidance. kind 'element' describes a single information element. kind 'compilation' describes protection that applies when elements appear together.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entry_id", "kind", "description"],
+      "oneOf": [{ "required": ["level"] }, { "required": ["level_range"] }],
+      "properties": {
+        "entry_id": { "$ref": "#/$defs/local_id" },
+        "kind": { "enum": ["element", "compilation"] },
+        "section_id": { "$ref": "#/$defs/local_id" },
+        "portion_marking": {
+          "description": "The marking of this row within the guide document itself. Separate from the level of the information the row describes.",
+          "$ref": "#/$defs/short_text"
+        },
+        "regime": { "$ref": "#/$defs/regime" },
+        "description": {
+          "description": "A precise description of the information element.",
+          "$ref": "#/$defs/text"
+        },
+        "level": { "$ref": "#/$defs/level" },
+        "level_range": { "$ref": "#/$defs/level_range" },
+        "condition_text": {
+          "description": "Human-readable conditions under which this guidance applies. Not an executable rule.",
+          "$ref": "#/$defs/text"
+        },
+        "exceptions_text": { "$ref": "#/$defs/text" },
+        "references": {
+          "description": "entry_id values of related entries. For a compilation, the constituent elements.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/local_id" }
+        },
+        "controls": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/control" }
+        },
+        "reason": { "$ref": "#/$defs/reason" },
+        "declassification": { "$ref": "#/$defs/declassification" },
+        "sources": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/source" }
+        },
+        "statements": { "$ref": "#/$defs/statements" },
+        "notes": { "$ref": "#/$defs/text" },
+        "extensions": { "$ref": "#/$defs/extensions" }
+      }
+    },
+    "authority_claim": {
+      "description": "Who is claimed to approve this guide and under what delegation. Recorded claims only; the format does not verify them.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claimed_signer"],
+      "properties": {
+        "claimed_signer": {
+          "type": "object",
+          "additionalProperties": false,
+          "anyOf": [{ "required": ["name"] }, { "required": ["personal_identifier"] }],
+          "properties": {
+            "name": { "$ref": "#/$defs/short_text" },
+            "position": { "$ref": "#/$defs/short_text" },
+            "personal_identifier": { "$ref": "#/$defs/short_text" }
+          }
+        },
+        "claimed_delegation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["highest_level"],
+          "properties": {
+            "highest_level": { "$ref": "#/$defs/level" },
+            "program": { "$ref": "#/$defs/short_text" },
+            "evidence": { "$ref": "#/$defs/evidence" }
+          }
+        }
+      }
+    },
+    "authority_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["not_started", "pending", "complete", "rejected"] },
+        "reviewed_by": { "$ref": "#/$defs/short_text" },
+        "reviewed_on": { "$ref": "#/$defs/date" },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } },
+        "notes": { "$ref": "#/$defs/text" }
+      }
+    },
+    "digest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alg", "value"],
+      "properties": {
+        "alg": { "const": "sha-256" },
+        "value": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "history": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "previous_revisions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["revision_id"],
+            "properties": {
+              "revision_id": { "$ref": "#/$defs/local_id" },
+              "payload_digest": { "$ref": "#/$defs/digest" },
+              "note": { "$ref": "#/$defs/text" }
+            }
+          }
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind", "date"],
+            "properties": {
+              "kind": {
+                "enum": ["created", "reviewed", "issued", "superseded", "cancelled", "other"]
+              },
+              "date": { "$ref": "#/$defs/date" },
+              "note": { "$ref": "#/$defs/text" }
+            }
+          }
+        }
+      }
+    },
+    "attestation": {
+      "description": "A detached signature over an approval statement. See the specification, section 9.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["format", "statement", "signature"],
+      "properties": {
+        "format": { "const": "openscg-cms-detached-v1" },
+        "statement": {
+          "description": "The approval statement object that was signed.",
+          "type": "object"
+        },
+        "signature": {
+          "description": "Base64 (RFC 4648 section 4, with padding) DER encoding of a CMS ContentInfo containing a detached SignedData.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9+/]+={0,2}$"
+        }
+      }
+    },
+    "extensions": {
+      "description": "Namespaced supplemental data. Keys are reverse-DNS namespaces, for example 'com.example.widgets'. An extension marked must_understand blocks approval in any implementation that does not support it.",
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9-]+(\\.[a-z0-9-]+)+$",
+        "maxLength": 255
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["must_understand", "data"],
+        "properties": {
+          "must_understand": { "type": "boolean" },
+          "version": { "$ref": "#/$defs/short_text" },
+          "data": true
+        }
+      }
+    }
+  }
+}

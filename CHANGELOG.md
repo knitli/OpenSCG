@@ -7,3 +7,7 @@ All notable changes to OpenSCG are recorded here. The format follows [Keep a Cha
 ### Added
 
 - Project bootstrap: implementation plan, governance, contribution and security policies, proposal process, CI, and a release workflow that is ready but switched off.
+- JSON Schema 2020-12 for guides (`schema/0.1/guide.schema.json`), with stable `$id`.
+- Specification sections 1–6: scope and limits, terms, identifiers, data model, profiles, structural validation.
+- Synthetic examples: the LANTERN guide and the requirements' compilation example.
+- Reference library: `validateStructure()`, findings model, embedded schema.
