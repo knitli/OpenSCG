@@ -2,13 +2,19 @@
 
 OpenSCG is an open, machine-readable format for **security classification guides (SCGs)**: a JSON Schema, a plain-language specification of what each field means, and a suite of test files that any tool can check itself against.
 
-> **OpenSCG is not an official government standard.** It is a proposed interchange format, maintained in the open. A file that passes every OpenSCG check is well-formed and internally consistent. That does not make it lawful, approved, or correct classification guidance. Those are decisions for the responsible people and agencies.
+> **OpenSCG is not an official government standard.**
+>
+> It is a proposed interchange format, maintained in the open by [Knitli](https://www.knitli.com) and other contributors. A file that passes every OpenSCG check is well-formed and internally consistent with the defined schema. That doesn't make it approved, interchangeable with other formats, or sanctioned by any government authority.
+>
+> OpenSCG aims for compliance with [DoD-M 5200.42's](https://www.esd.whs.mil/Portals/54/Documents/DD/issuances/dodm/520045m.pdf) requirements and guidelines established in [ISOO's SCG Handbook](https://www.archives.gov/files/isoo/training/scg-handbook.pdf). DoD-M 5200.42 serves as a baseline for best practices, and isn't a constraint on using it. Other departments and agencies may use or extend OpenSCG as they please consistent with the [license](LICENSE).
 
 ## Why it exists
 
-The [ISOO FY2025 Annual Report](https://www.archives.gov/files/isoo/reports/isoo-fy-2025-annual-report-final-508.pdf) (pp. 6–8) reviewed ten SCGs and found guides that did not map levels to specific elements, guides missing declassification instructions, and guides missing classification reasoning. A structured format can make those gaps visible before a guide is approved. It cannot fill them in.
+[ISOO FY2025 Annual Report](https://www.archives.gov/files/isoo/reports/isoo-fy-2025-annual-report-final-508.pdf) (pp. 6–8) reviewed SCGs and found guides that did not map levels to specific elements, guides missing declassification instructions, and guides missing classification reasoning. Multiple ISOO and inspectors general reviews over the last twenty years have found the same problems.
 
-## What is in this repository
+A structured format provides a baseline for machine validation and checking, simplified user interfaces, and facilitates automation. DoD-M 5200.42 also requires DoD SCGs to be created in machine and human readable formats that contain the same information, while there is no publicly available schema for SCGs. We developed this schema as a way for the public to contribute to DoD classification modernization and support an open, compliant standard compatible with DoD's goals and public requirements (but not sanctioned by it).
+
+## What's in this repository
 
 | Path                | What it is                                                                                |
 | ------------------- | ----------------------------------------------------------------------------------------- |
@@ -30,7 +36,7 @@ You do not need our code. Any JSON Schema 2020-12 validator can check structure 
 npm install @knitli/openscg
 ```
 
-The library is pre-release; names may change before 1.0.
+The library is pre-release; names may change before 1.0 based on user, developer and institutional feedback.
 
 ```ts
 import { parseStrict, validate, isApprovalReady, payloadDigest } from "@knitli/openscg";
@@ -69,11 +75,11 @@ Pre-release draft (`0.1.0-draft`). See [the implementation plan](docs/plan/IMPLE
 
 - [How decisions are made](GOVERNANCE.md)
 - [How to contribute or propose a change](CONTRIBUTING.md)
-- [How to report a security problem](SECURITY.md)
+- [How to report a security problem](https://knitli.com/security/)
 - [Code of conduct](CODE_OF_CONDUCT.md)
 
 **Never post real, controlled, or classified information** in issues, pull requests, or examples. Use invented data only.
 
 ## License
 
-Apache-2.0 (see [LICENSE](LICENSE) and [NOTICE](NOTICE)), subject to the legal review noted in the project requirements. "OpenSCG" is a working project name; no trademark clearance has been done.
+Apache-2.0 (see [LICENSE](LICENSE) and [NOTICE](NOTICE)), subject to the legal review noted in the project requirements. "OpenSCG" is a working project name; we have conducted no trademark clearance and will not seek to acquire one. To avoid any potential confusion, only use "OpenSCG" when specifically referring to this library for a machine-readable schema for U.S. Government security classification guides.
