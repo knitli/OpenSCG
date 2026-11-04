@@ -156,6 +156,7 @@ jobs:
       - name: Publish the attested tarball
         env:
           NPM_TAG: ${{ needs.build.outputs.npm_tag }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           TARBALL="$(ls release/*.tgz)"
-          npm stage publish "$TARBALL" --access public --provenance --tag "$NPM_TAG"
+          npm stage publish "$TARBALL" --access public --provenance --tag latest --tag "$NPM_TAG"
