@@ -1,6 +1,6 @@
 # Security policy
 
-This policy extends Knitli's [organizational security policy](https://github.com/knitli/.github/blob/main/SECURITY.md); please see that reference for detailed instructions on reporting, vulnerability disclosures, and other security information.
+This policy extends Knitli's [organizational security policy](https://knitli.com/security/); please see that reference for detailed instructions on reporting, vulnerability disclosures, and other security information.
 
 ## Never send real or classified information
 
