@@ -21,4 +21,14 @@ export {
   type Severity,
 } from "./findings.js";
 export { GUIDE_SCHEMA_0_1 } from "./generated/schema.js";
+export { compareForLoss, type LossItem, type LossReport } from "./loss.js";
+export {
+  KNOWN_PROFILES,
+  RULES,
+  type RuleCode,
+  type ValidateOptions,
+  validate,
+  validateSemantics,
+} from "./semantic.js";
 export { GUIDE_SCHEMA_ID, STRUCTURE_CODE, validateStructure } from "./structure.js";
+export type { Entry, Guide, Level } from "./types.js";

@@ -11,3 +11,5 @@ All notable changes to OpenSCG are recorded here. The format follows [Keep a Cha
 - Specification sections 1–6: scope and limits, terms, identifiers, data model, profiles, structural validation.
 - Synthetic examples: the LANTERN guide and the requirements' compilation example.
 - Reference library: `validateStructure()`, findings model, embedded schema.
+- Specification section 7: semantic rules with stable finding codes, four severities, and loss reports.
+- Reference library: `validate()`, `validateSemantics()`, `RULES`, `compareForLoss()`.
