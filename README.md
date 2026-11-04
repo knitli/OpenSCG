@@ -69,7 +69,7 @@ Pre-release draft (`0.1.0-draft`). See [the implementation plan](docs/plan/IMPLE
 
 - [How decisions are made](GOVERNANCE.md)
 - [How to contribute or propose a change](CONTRIBUTING.md)
-- [How to report a security problem](../.github/SECURITY.md)
+- [How to report a security problem]([https://github.com/knitli/.github/SECURITY.md](https://github.com/knitli/.github/blob/main/SECURITY.md))
 - [Code of conduct](CODE_OF_CONDUCT.md)
 
 **Never post real, controlled, or classified information** in issues, pull requests, or examples. Use invented data only.
