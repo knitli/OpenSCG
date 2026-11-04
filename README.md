@@ -73,11 +73,11 @@ Pre-release draft (`0.1.0-draft`). See [the implementation plan](docs/plan/IMPLE
 
 - [How decisions are made](GOVERNANCE.md)
 - [How to contribute or propose a change](CONTRIBUTING.md)
-- [How to report a security problem](https://github.com/knitli/.github/blob/main/SECURITY.md)
+- [How to report a security problem](https://knitli.com/security/)
 - [Code of conduct](CODE_OF_CONDUCT.md)
 
 **Never post real, controlled, or classified information** in issues, pull requests, or examples. Use invented data only.
 
 ## License
 
-Apache-2.0 (see [LICENSE](LICENSE) and [NOTICE](NOTICE)), subject to the legal review noted in the project requirements. "OpenSCG" is a working project name; no trademark clearance has been done.
+Apache-2.0 (see [LICENSE](LICENSE) and [NOTICE](NOTICE)), subject to the legal review noted in the project requirements. "OpenSCG" is a working project name; we have conducted no trademark clearance and will not seek to acquire one. To avoid any potential confusion, only use "OpenSCG" when specifically referring to this library for a machine-readable schema for U.S. Government security classification guides.
