@@ -12,7 +12,9 @@
       "!**/coverage",
       "!**/.venv",
       "!**/node_modules",
-      "!conformance/vectors"
+      "!conformance/vectors",
+      "!conformance/cases",
+      "!conformance/manifest.json"
     ]
   },
   "formatter": {

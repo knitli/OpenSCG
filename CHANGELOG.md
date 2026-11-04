@@ -16,3 +16,5 @@ All notable changes to OpenSCG are recorded here. The format follows [Keep a Cha
 - Specification sections 8–10: strict parsing rules, RFC 8785 canonical bytes, the signed payload and its exclusions, approval statements with domain separation, the `openscg-cms-detached-v1` attestation profile, verification results reported separately, renditions, and signed release manifests.
 - Reference library: `parseStrict()`, `canonicalize()`, `payloadDigest()`, `buildApprovalStatement()`, `createAttestation()`, `verifyAttestation()`, `signDetached()`, `verifyDetached()`, and release-manifest functions.
 - Conformance vectors: canonicalization (including RFC 8785 examples), payload and statement bytes, and twelve synthetic attestation cases.
+- Conformance suite (`conformance/manifest.json`, 35 validation cases with hand-written expected results) and the versioned test procedure `spec/conformance.md` (suite 0.1.0).
+- An independent Python consumer (`consumers/python`) that passes the whole suite using only published materials, OpenSSL and `asn1crypto`. Run in CI.

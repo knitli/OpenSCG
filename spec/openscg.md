@@ -530,4 +530,6 @@ OpenSCG 0.1 does not define a workbook layout. A workbook export is a documented
 
 Producers writing untrusted text into spreadsheet cells MUST neutralize formula injection (for example, text beginning with `=`, `+`, `-` or `@`).
 
-_(Section 11 onward — conformance — is added in a later draft.)_
+## 11. Conformance
+
+The conformance suite and the procedure for running it are in [`conformance.md`](conformance.md). An implementation may describe itself only in the terms that procedure allows.

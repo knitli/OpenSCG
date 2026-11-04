@@ -39,6 +39,24 @@ jobs:
       - name: Package contents are what we expect
         run: npm pack --dry-run
 
+  python-consumer:
+    name: Independent Python consumer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v6
+      - name: OpenSSL version
+        run: openssl version
+      - name: Lint
+        working-directory: consumers/python
+        run: |
+          uv run --frozen ruff check .
+          uv run --frozen ruff format --check .
+      - name: Run the conformance suite
+        run: uv run --frozen --project consumers/python pytest consumers/python -v
+
   typos:
     name: Spelling
     runs-on: ubuntu-latest

@@ -1,0 +1,466 @@
+{
+  "description": "OpenSCG validation conformance cases. See spec/conformance.md for the procedure. All content is SYNTHETIC.",
+  "spec_version": "0.1.0-draft",
+  "suite_version": "0.1.0",
+  "cases": [
+    {
+      "id": "valid-lantern-reviewed",
+      "description": "LANTERN with reviewed markings: no findings.",
+      "file": "cases/valid-lantern-reviewed.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [],
+        "approval_ready": true
+      }
+    },
+    {
+      "id": "valid-lantern-as-shipped",
+      "description": "LANTERN as shipped: blocked only by the pending markings review.",
+      "file": "cases/valid-lantern-as-shipped.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V046",
+            "pointer": "/document_markings/review"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "valid-unclassified-only",
+      "description": "A valid unclassified entry needs no classified-only fields.",
+      "file": "cases/valid-unclassified-only.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [],
+        "approval_ready": true
+      }
+    },
+    {
+      "id": "valid-exemption-with-evidence",
+      "description": "An exemption with authority evidence is not flagged.",
+      "file": "cases/valid-exemption-with-evidence.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [],
+        "approval_ready": true
+      }
+    },
+    {
+      "id": "valid-supported-extension-ignored-safely",
+      "description": "An optional unknown extension is preserved with a warning.",
+      "file": "cases/valid-supported-extension-ignored-safely.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V034",
+            "pointer": "/extensions/org.example.notes"
+          }
+        ],
+        "approval_ready": true
+      }
+    },
+    {
+      "id": "fy2025-no-elements",
+      "description": "ISOO FY2025: levels not mapped to specific elements (no entries).",
+      "file": "cases/fy2025-no-elements.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V011",
+            "pointer": "/entries"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "fy2025-no-declassification",
+      "description": "ISOO FY2025: a classified element lacks a declassification instruction.",
+      "file": "cases/fy2025-no-declassification.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V013",
+            "pointer": "/entries/2/declassification"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "fy2025-no-reason",
+      "description": "ISOO FY2025: a classified element lacks classification reasoning.",
+      "file": "cases/fy2025-no-reason.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V010",
+            "pointer": "/entries/2/reason"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "duplicate-entry-id",
+      "description": "Two entries share an entry_id.",
+      "file": "cases/duplicate-entry-id.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V001",
+            "pointer": "/entries/1/entry_id"
+          },
+          {
+            "code": "OSCG-V003",
+            "pointer": "/entries/5/references/0"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "dangling-reference",
+      "description": "A compilation references an entry that does not exist.",
+      "file": "cases/dangling-reference.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V003",
+            "pointer": "/entries/5/references/1"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "unknown-section",
+      "description": "An entry names a section that does not exist.",
+      "file": "cases/unknown-section.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V004",
+            "pointer": "/entries/0/section_id"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "self-reference",
+      "description": "An entry references itself.",
+      "file": "cases/self-reference.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V005",
+            "pointer": "/entries/0/references/0"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "inverted-range",
+      "description": "A level range whose lowest is above its highest.",
+      "file": "cases/inverted-range.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V014",
+            "pointer": "/entries/3/level_range"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "compilation-no-condition",
+      "description": "A compilation without condition_text.",
+      "file": "cases/compilation-no-condition.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V016",
+            "pointer": "/entries/5/condition_text"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "compilation-not-higher",
+      "description": "A compilation that adds no protection over a constituent.",
+      "file": "cases/compilation-not-higher.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V018",
+            "pointer": "/entries/5/level"
+          }
+        ],
+        "approval_ready": true
+      }
+    },
+    {
+      "id": "unclassified-with-reason",
+      "description": "An unclassified entry with a classified reason.",
+      "file": "cases/unclassified-with-reason.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V019",
+            "pointer": "/entries/0/reason"
+          }
+        ],
+        "approval_ready": true
+      }
+    },
+    {
+      "id": "exemption-no-evidence",
+      "description": "An exemption code with no authority evidence.",
+      "file": "cases/exemption-no-evidence.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V020",
+            "pointer": "/entries/2/declassification/authority"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "exemption-hum",
+      "description": "50X1-HUM always goes to policy review.",
+      "file": "cases/exemption-hum.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V021",
+            "pointer": "/entries/2/declassification/code"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "aea-entry",
+      "description": "Atomic Energy Act information is unsupported and blocks approval.",
+      "file": "cases/aea-entry.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V030",
+            "pointer": "/entries/2/regime"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "unknown-profile",
+      "description": "An unknown profile is unsupported.",
+      "file": "cases/unknown-profile.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V031",
+            "pointer": "/profile"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "dod-profile-unverified",
+      "description": "The DoD profile warns that it is unverified.",
+      "file": "cases/dod-profile-unverified.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V032",
+            "pointer": "/profile"
+          }
+        ],
+        "approval_ready": true
+      }
+    },
+    {
+      "id": "must-understand-extension",
+      "description": "An unsupported must-understand extension blocks approval.",
+      "file": "cases/must-understand-extension.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V033",
+            "pointer": "/entries/1/extensions/org.example.rules"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "no-oca",
+      "description": "No original classification authority.",
+      "file": "cases/no-oca.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V041",
+            "pointer": "/oca"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "no-dates",
+      "description": "No issue or last-review date.",
+      "file": "cases/no-dates.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V043",
+            "pointer": "/dates"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "classified-document-no-cab",
+      "description": "A classified guide without its own classification authority block.",
+      "file": "cases/classified-document-no-cab.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V045",
+            "pointer": "/document_markings/classification_authority_block"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "oca-level-too-low",
+      "description": "The OCA's claimed level is below the guide's highest level.",
+      "file": "cases/oca-level-too-low.json",
+      "expected": {
+        "structure": "valid",
+        "findings": [
+          {
+            "code": "OSCG-V049",
+            "pointer": "/oca/highest_level"
+          }
+        ],
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "structure-missing-description",
+      "description": "An entry without a description.",
+      "file": "cases/structure-missing-description.json",
+      "expected": {
+        "structure": "invalid",
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "structure-unknown-field",
+      "description": "An unknown field outside extensions.",
+      "file": "cases/structure-unknown-field.json",
+      "expected": {
+        "structure": "invalid",
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "structure-bad-level",
+      "description": "A level outside U/C/S/TS.",
+      "file": "cases/structure-bad-level.json",
+      "expected": {
+        "structure": "invalid",
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "structure-level-and-range",
+      "description": "An entry with both level and level_range.",
+      "file": "cases/structure-level-and-range.json",
+      "expected": {
+        "structure": "invalid",
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "structure-range-no-condition",
+      "description": "A level range with no condition_text.",
+      "file": "cases/structure-range-no-condition.json",
+      "expected": {
+        "structure": "invalid",
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "structure-empty-categories",
+      "description": "A reason with no categories.",
+      "file": "cases/structure-empty-categories.json",
+      "expected": {
+        "structure": "invalid",
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "structure-bad-date",
+      "description": "A date that is not a calendar date.",
+      "file": "cases/structure-bad-date.json",
+      "expected": {
+        "structure": "invalid",
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "structure-bad-namespace",
+      "description": "An extension key that is not a namespace.",
+      "file": "cases/structure-bad-namespace.json",
+      "expected": {
+        "structure": "invalid",
+        "approval_ready": false
+      }
+    },
+    {
+      "id": "parse-duplicate-level",
+      "description": "An entry states its level twice. Lenient parsers keep one silently.",
+      "file": "cases/parse-duplicate-level.json",
+      "expected": {
+        "parse_error": "OSCG-P003"
+      }
+    }
+  ]
+}

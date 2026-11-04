@@ -58,7 +58,8 @@
     "prepack": "npm run clean && npm run build",
     "embed-schema": "node scripts/embed-schema.mjs && biome format --write src/generated",
     "vectors:attestation": "tsx scripts/generate-attestation-vectors.ts",
-    "vectors:payload": "tsx scripts/generate-payload-vectors.ts"
+    "vectors:payload": "tsx scripts/generate-payload-vectors.ts",
+    "conformance:generate": "tsx scripts/generate-conformance-cases.ts"
   },
   "publishConfig": {
     "access": "public",
