@@ -30,7 +30,30 @@ You do not need our code. Any JSON Schema 2020-12 validator can check structure 
 npm install @knitli/openscg
 ```
 
-The library is pre-release. Its API will be documented in this README as each piece lands.
+The library is pre-release; names may change before 1.0.
+
+```ts
+import { parseStrict, validate, isApprovalReady, payloadDigest } from "@knitli/openscg";
+
+const guide = parseStrict(fileBytes); // rejects duplicate keys, bad UTF-8, …
+const findings = validate(guide); // [{ code, severity, pointer, message }, …]
+const ready = isApprovalReady(findings); // false if any error / unsupported / policy_review
+const digest = await payloadDigest(guide); // { alg: "sha-256", value: "…" }
+```
+
+| Function                                         | What it does                                                                                                           | Spec  |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- | ----- |
+| `parseStrict(bytes)`                             | Parses JSON, rejecting anything that could be read two ways.                                                           | §8.2  |
+| `validateStructure(doc)`                         | JSON Schema checks only.                                                                                               | §6    |
+| `validate(doc)`                                  | Structural, then semantic checks.                                                                                      | §7    |
+| `compareForLoss(before, after)`                  | Lists what a conversion did not preserve.                                                                              | §7.5  |
+| `canonicalize(value)`                            | RFC 8785 canonical bytes.                                                                                              | §8.3  |
+| `payloadDigest(guide)`                           | SHA-256 of the signed payload.                                                                                         | §8.5  |
+| `buildApprovalStatement(guide)`                  | The statement a signer approves.                                                                                       | §9.1  |
+| `verifyAttestation(guide, att, policy)`          | Checks binding, signature, algorithm, key usage, validity, trust, revocation, and reports authority review separately. | §9.4  |
+| `buildReleaseManifest` / `verifyReleaseManifest` | Signed list of released file hashes, for PDF and workbook renditions.                                                  | §10.3 |
+
+Signing keys are never created or stored by this library. `createAttestation()` and `signDetached()` take a key the caller already holds, for test vectors and for signing interfaces that expose a Web Crypto key.
 
 ## Status
 

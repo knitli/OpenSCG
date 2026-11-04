@@ -13,3 +13,6 @@ All notable changes to OpenSCG are recorded here. The format follows [Keep a Cha
 - Reference library: `validateStructure()`, findings model, embedded schema.
 - Specification section 7: semantic rules with stable finding codes, four severities, and loss reports.
 - Reference library: `validate()`, `validateSemantics()`, `RULES`, `compareForLoss()`.
+- Specification sections 8–10: strict parsing rules, RFC 8785 canonical bytes, the signed payload and its exclusions, approval statements with domain separation, the `openscg-cms-detached-v1` attestation profile, verification results reported separately, renditions, and signed release manifests.
+- Reference library: `parseStrict()`, `canonicalize()`, `payloadDigest()`, `buildApprovalStatement()`, `createAttestation()`, `verifyAttestation()`, `signDetached()`, `verifyDetached()`, and release-manifest functions.
+- Conformance vectors: canonicalization (including RFC 8785 examples), payload and statement bytes, and twelve synthetic attestation cases.

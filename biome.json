@@ -1,8 +1,19 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
   "files": {
-    "includes": ["**", "!**/dist", "!**/coverage", "!**/.venv", "!**/node_modules"]
+    "includes": [
+      "**",
+      "!**/dist",
+      "!**/coverage",
+      "!**/.venv",
+      "!**/node_modules",
+      "!conformance/vectors"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -12,8 +23,18 @@
   },
   "linter": {
     "enabled": true,
-    "rules": { "preset": "recommended" }
+    "rules": {
+      "preset": "recommended"
+    }
   },
-  "javascript": { "formatter": { "quoteStyle": "double" } },
-  "json": { "formatter": { "enabled": true } }
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double"
+    }
+  },
+  "json": {
+    "formatter": {
+      "enabled": true
+    }
+  }
 }

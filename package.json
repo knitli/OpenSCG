@@ -56,7 +56,9 @@
     "test:watch": "vitest",
     "verify": "npm run check && npm run typecheck && npm run test && npm run build",
     "prepack": "npm run clean && npm run build",
-    "embed-schema": "node scripts/embed-schema.mjs && biome format --write src/generated"
+    "embed-schema": "node scripts/embed-schema.mjs && biome format --write src/generated",
+    "vectors:attestation": "tsx scripts/generate-attestation-vectors.ts",
+    "vectors:payload": "tsx scripts/generate-payload-vectors.ts"
   },
   "publishConfig": {
     "access": "public",
@@ -65,11 +67,14 @@
   "devDependencies": {
     "@biomejs/biome": "^2.6.5",
     "@types/node": "^22.20.5",
+    "tsx": "^4.23.15",
     "typescript": "^6.0.3",
     "vitest": "^5.1.0"
   },
   "dependencies": {
     "ajv": "^8.20.0",
-    "ajv-formats": "^3.0.1"
+    "ajv-formats": "^3.0.1",
+    "asn1js": "^4.0.0",
+    "pkijs": "^4.0.1"
   }
 }

@@ -333,4 +333,201 @@ Any operation that reads an OpenSCG file and writes another representation of it
 
 **Example.** A spreadsheet export cannot represent entry-level extensions. Its loss report lists `/entries/4/extensions/org.example.rules` as `removed`, and the export is labeled accordingly.
 
-_(Sections 8 onward are added in later drafts: canonical payload, attestations, conformance.)_
+## 8. Strict parsing, canonical bytes, and the payload digest
+
+A signature has to cover exact bytes. This section says how to get from a guide to those bytes, so that two independent implementations always agree.
+
+### 8.1 Overview
+
+```text
+guide file ──strict parse (8.2)──▶ guide value
+guide value ──remove excluded members (8.4)──▶ payload
+payload ──RFC 8785 canonicalization (8.3), UTF-8──▶ payload bytes
+payload bytes ──SHA-256 (8.5)──▶ payload digest
+```
+
+The payload digest identifies the content of a revision. It does not authenticate anything by itself; section 9 does that.
+
+### 8.2 Strict parsing
+
+Implementations MUST parse OpenSCG files as follows, and MUST reject the file with the listed code otherwise. Ordinary JSON parsers are often lenient here, which is why these rules are spelled out.
+
+| Code      | Rejected when                                                                                                                                                                                                                                                      |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| OSCG-P001 | The input is not valid UTF-8, or starts with a byte-order mark.                                                                                                                                                                                                    |
+| OSCG-P002 | The input is not exactly one JSON value as defined by [RFC 8259](https://www.rfc-editor.org/rfc/rfc8259) (for example a trailing comma, `NaN`, or two values in one file).                                                                                         |
+| OSCG-P003 | An object has two members with the same name. (Names are compared after escapes are decoded, so `"a"` and `"a"` are the same.)                                                                                                                                     |
+| OSCG-P004 | A string contains an unpaired surrogate, such as `"\ud800"`.                                                                                                                                                                                                       |
+| OSCG-P005 | A number is too large to represent as an IEEE 754 double, or is an integer literal (no fraction or exponent) that a double cannot represent exactly. `12345678901234567890` is rejected; `100000000000000000000` is accepted, because it is exactly representable. |
+| OSCG-P006 | The input exceeds the implementation's size or nesting limits. Implementations MUST have limits. RECOMMENDED: 16 MiB and depth 64.                                                                                                                                 |
+
+**Why duplicates matter.** `{"level":"U","level":"S"}` reads as `U` to some parsers and `S` to others. If such a file could be signed, a reviewer and a consumer could see different guidance under the same signature.
+
+**Producers** MUST NOT write numbers whose decimal text a double cannot represent exactly, even with a fraction (for example `9007199254740993.0`). Validators only detect the integer case.
+
+A member named `__proto__` is ordinary data and MUST be preserved like any other.
+
+### 8.3 Canonical form
+
+The canonical form of a JSON value is its serialization under the JSON Canonicalization Scheme, [RFC 8785](https://www.rfc-editor.org/rfc/rfc8785), encoded as UTF-8. In brief:
+
+- No whitespace between tokens.
+- Object members sorted by name, comparing names as sequences of UTF-16 code units.
+- Strings escaped minimally (only `"`, `\`, and control characters below U+0020, using `\b \t \n \f \r` where they exist and `\u00XX` lowercase otherwise).
+- Numbers written using the ECMAScript number-to-string algorithm (`4.50` → `4.5`, `1E30` → `1e+30`, `-0` → `0`).
+- Array order is kept.
+
+**Example.** The input
+
+```json
+{ "b": 1, "a": [4.5, "x"] }
+```
+
+canonicalizes to the 21 bytes `{"a":[4.5,"x"],"b":1}`.
+
+### 8.4 The payload
+
+The payload is the guide object with these top-level members removed, and nothing else changed:
+
+| Excluded member | Why                                                                                                                                       |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `attestations`  | A payload must never contain its own signature.                                                                                           |
+| `review`        | A person's authority review is recorded after signing. Including it would change the digest and invalidate the signature it is reviewing. |
+
+Every other member is included, **including** `extensions` and `synthetic`. Exclusions apply only at the top level: a member named `review` inside an entry or extension stays in.
+
+The payload format identifier for these rules is `openscg-payload-v1`. A future change to the exclusion list or the canonical form would use a new identifier.
+
+### 8.5 Payload digest
+
+The payload digest is SHA-256 over the payload bytes, written as `{"alg": "sha-256", "value": "<64 lowercase hex digits>"}`.
+
+Implementations MUST NOT normalize, reformat, or otherwise rewrite a signed revision's content after signing. If anything in the payload changes, the result is a new revision with a new digest (3.4).
+
+## 9. Approval statements and attestations
+
+### 9.1 The approval statement
+
+An **approval statement** says, in a form a person can read and a machine can check, exactly what is being approved:
+
+| Member                                                 | Value                                                                                                                                                                                                  |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `type`                                                 | `"openscg-approval-statement"`                                                                                                                                                                         |
+| `version`                                              | `1`                                                                                                                                                                                                    |
+| `purpose`                                              | `"approve-scg-revision"`                                                                                                                                                                               |
+| `guide_id`, `revision_id`, `schema_version`, `profile` | Copied from the guide.                                                                                                                                                                                 |
+| `payload_format`                                       | `"openscg-payload-v1"`                                                                                                                                                                                 |
+| `payload_digest`                                       | The payload digest (8.5).                                                                                                                                                                              |
+| `signer`                                               | The signer context: `name`, `position`, and/or `personal_identifier`, normally copied from `authority.claimed_signer`.                                                                                 |
+| `statement_text`                                       | Exactly: `I approve revision {revision_id} of the security classification guide "{title}" ({guide_id}), whose OpenSCG payload has SHA-256 digest {digest}. This approval covers exactly that content.` |
+
+A signing interface SHOULD show `statement_text` and the guide content to the signer before signing.
+
+### 9.2 Signed bytes and domain separation
+
+The bytes that are signed are the UTF-8 string `OpenSCG-Approval-Statement-v1` followed by one line feed (U+000A), immediately followed by the canonical form (8.3) of the approval statement.
+
+The prefix makes sure a signature over an OpenSCG approval cannot be presented as a signature over anything else — including an OpenSCG release manifest, which uses a different prefix (10.3) — and the reverse.
+
+### 9.3 Attestation format `openscg-cms-detached-v1`
+
+An attestation is an object with:
+
+- `format`: `"openscg-cms-detached-v1"`
+- `statement`: the approval statement object.
+- `signature`: base64 (RFC 4648 §4, with padding, no line breaks) of the DER encoding of a CMS `ContentInfo` ([RFC 5652](https://www.rfc-editor.org/rfc/rfc5652)) whose content is `SignedData` with:
+  - `eContentType` `id-data`, with the content **absent** (detached);
+  - exactly one `SignerInfo`;
+  - signed attributes containing at least `content-type` (`id-data`) and `message-digest`. The `message-digest` is the hash of the signed bytes in 9.2. The signature is computed over the DER of the signed attributes, so the content is hashed exactly once;
+  - the signer's certificate in `certificates`. Intermediates MAY be included.
+
+A `signing-time` attribute MAY be present. It is a **claim by the signer** and verifiers MUST NOT treat it as trusted time.
+
+Attestations are stored in the guide's `attestations` array, which is outside the payload. An attestation can also travel as a separate file.
+
+Who builds the signed attributes depends on the signing interface in use. Whatever builds them must pass the signer exactly the DER of the signed attributes — not the statement, and not a hash of a hash.
+
+### 9.4 Verification
+
+A verifier takes a guide, an attestation, and a **trust policy**: trust anchors, optional intermediates, optional CRLs supplied offline, a verification time, permitted algorithms, a key-usage rule, and what to do when revocation status is unknown.
+
+There is no default trust. A verifier with no trust anchors MUST NOT report any signature as trusted.
+
+The verifier reports **each of these separately**:
+
+| Result       | Values                                               | Checks                                                                                                                                                                                                                                              |
+| ------------ | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `binding`    | `ok`, `mismatch`                                     | The statement's fixed members are as in 9.1; `guide_id`, `revision_id`, `schema_version` and `profile` equal the guide's; `payload_digest` equals the digest recomputed from the guide; `statement_text` equals the template filled from the guide. |
+| `signature`  | `valid`, `invalid`, `malformed`                      | The CMS structure is as in 9.3 and the signature verifies over the bytes in 9.2.                                                                                                                                                                    |
+| `algorithm`  | `permitted`, `not_permitted`                         | The digest and signature algorithms are on the policy's lists. Default: SHA-256, SHA-384 or SHA-512 with ECDSA, RSA PKCS#1 v1.5 or RSA-PSS. SHA-1 is not permitted.                                                                                 |
+| `key_usage`  | `permitted`, `not_permitted`                         | The signer certificate's key usage allows document signing. Default: the `nonRepudiation` (`contentCommitment`) bit is set. An authentication certificate is not automatically a signing certificate.                                               |
+| `validity`   | `ok`, `expired`, `not_yet_valid`                     | The verification time is within the signer certificate's validity period.                                                                                                                                                                           |
+| `trust`      | `trusted`, `untrusted`                               | An [RFC 5280](https://www.rfc-editor.org/rfc/rfc5280) path exists from the signer certificate to a trust anchor.                                                                                                                                    |
+| `revocation` | `good`, `revoked`, `unknown`                         | Every certificate in the path except the anchor has a status from a CRL that the issuer signed, that is current at the verification time (`thisUpdate` ≤ time ≤ `nextUpdate`). A stale or missing CRL means `unknown`.                              |
+| `authority`  | `not_verified`, `review_complete`, `review_rejected` | Taken from the guide's `review.status`. **Never from the signature.**                                                                                                                                                                               |
+
+Results that could not be evaluated because an earlier step failed are reported as `not_checked`.
+
+**Overall result.** A verifier reports the attestation as **technically valid** only if binding is `ok`, signature is `valid`, algorithm and key usage are `permitted`, validity is `ok`, trust is `trusted`, and revocation is `good` — or `unknown` where the local policy explicitly accepts unknown status, in which case that MUST be stated.
+
+Verifiers MUST fail closed: anything they cannot parse or evaluate counts against validity.
+
+**What to show people.** For a technically valid attestation:
+
+| `authority`       | Show                                                                            |
+| ----------------- | ------------------------------------------------------------------------------- |
+| `not_verified`    | **Signature valid; authority not verified.**                                    |
+| `review_complete` | Signature valid; a human authority review is recorded as complete.              |
+| `review_rejected` | Signature valid; the recorded authority review rejected the signer's authority. |
+
+A consumer MUST NOT show a draft, an invalid signature, or a valid signature without authority review as "approved."
+
+### 9.5 What a valid attestation does not prove
+
+A technically valid attestation shows that the holder of a trusted, unrevoked key signed a statement bound to this exact payload. It does **not** show that the signer is an OCA, that the delegation covers this program and level, that the agency accepts this signature process, or that the guide was issued. Those are human determinations (4.7).
+
+### 9.6 Changing a signed revision
+
+Any change to the payload produces a new digest. The old attestation then fails `binding` for the changed guide, by design. The previously signed file and its attestation MUST be preserved unchanged, and they still verify on their own. Adding a `review` or more `attestations` does not change the payload.
+
+## 10. Renditions and output binding
+
+### 10.1 Renditions
+
+A **rendition** is a human-readable form of a revision, such as a PDF or a spreadsheet workbook. Every rendition produced from an OpenSCG revision:
+
+- MUST be generated from the same frozen revision as the JSON;
+- MUST display the `guide_id`, `revision_id`, and payload digest;
+- MUST display "DRAFT / NOT APPROVED" if the revision has no technically valid attestation;
+- MUST display "SYNTHETIC" if `synthetic` is `true`;
+- SHOULD be accompanied by a loss report (7.5) listing what it could not represent.
+
+### 10.2 What the displayed digest proves
+
+Nothing about the rendition's own bytes. A PDF that prints the right digest could have been edited after it was generated, and its file hash is different from the payload digest anyway. A consumer MUST NOT treat a matching printed digest as proof that a rendition is faithful.
+
+### 10.3 Release manifests
+
+To make a specific rendition's bytes tamper-evident, sign a **release manifest**:
+
+| Member                    | Value                                                                                                                                                                                                   |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`                    | `"openscg-release-manifest"`                                                                                                                                                                            |
+| `version`                 | `1`                                                                                                                                                                                                     |
+| `guide_id`, `revision_id` | Copied from the guide.                                                                                                                                                                                  |
+| `payload_digest`          | The payload digest.                                                                                                                                                                                     |
+| `files`                   | One item per released file: `name` (unique), `media_type`, `role` (`guide-json`, `attestation`, `rendition-pdf`, `rendition-xlsx`, or `other`), and `sha256` (lowercase hex of the file's exact bytes). |
+
+The signed bytes are the UTF-8 string `OpenSCG-Release-Manifest-v1` and a line feed, followed by the canonical form of the manifest. The signature uses the same CMS profile as 9.3. The manifest is a separate file, so no file contains its own hash.
+
+A verifier checks the manifest's signature exactly as in 9.4, checks that it names the same guide, revision and payload digest, and checks each file it holds against the listed hash. A listed file the consumer does not hold is reported `missing`, never assumed to match.
+
+A native PDF signature (for example PAdES) proves the PDF's bytes only. It is not an OpenSCG attestation and does not, by itself, bind the PDF to the JSON.
+
+### 10.4 Spreadsheet mappings
+
+OpenSCG 0.1 does not define a workbook layout. A workbook export is a documented mapping chosen by its producer, with its own coverage matrix and loss report. No workbook may be described as meeting a DoD or DTIC submission format unless that mapping has been verified against the authoritative template by the responsible office.
+
+Producers writing untrusted text into spreadsheet cells MUST neutralize formula injection (for example, text beginning with `=`, `+`, `-` or `@`).
+
+_(Section 11 onward — conformance — is added in a later draft.)_
